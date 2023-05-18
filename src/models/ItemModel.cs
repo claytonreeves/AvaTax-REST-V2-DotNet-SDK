@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -87,6 +87,21 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
+        /// Source of creation of this item
+        /// </summary>
+        public String source { get; set; }
+
+        /// <summary>
+        /// The Id of this item at the source
+        /// </summary>
+        public String sourceEntityId { get; set; }
+
+        /// <summary>
+        /// Universal unique code for item
+        /// </summary>
+        public String upc { get; set; }
+
+        /// <summary>
         /// List of classifications that belong to this item.
         /// A single classification consits of a productCode and a systemCode for a particular item.
         /// </summary>
@@ -100,7 +115,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of item tags.
         /// </summary>
-        public List<ItemTagDetailModel> tags { get; set; }
+        public List<ItemTagDetailInputModel> tags { get; set; }
+
+        /// <summary>
+        /// Additional key-description of the product.
+        /// </summary>
+        public object properties { get; set; }
 
 
         /// <summary>

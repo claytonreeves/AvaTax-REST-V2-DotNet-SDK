@@ -3,20 +3,20 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient 
  */
 
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// The type of data contained in this batch
     /// </summary>
     public enum BatchType
     {
@@ -71,7 +71,8 @@ namespace Avalara.AvaTax.RestClient
         TaxRuleImport = 9,
 
         /// <summary>
-        /// 
+        /// This batch type represents tax transaction data being uploaded to AvaTax. Each line in the batch represents a single transaction
+        ///  or a line in a multi-line transaction. For reference, see [Batched Transactions in REST v2](http://developer.avalara.com/blog/2016/10/24/batch-transaction-upload-in-rest-v2)
         /// </summary>
         TransactionImport = 10,
 
@@ -89,6 +90,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CustomerSupplierImport = 13,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        VarianceImport = 14,
 
     }
 }

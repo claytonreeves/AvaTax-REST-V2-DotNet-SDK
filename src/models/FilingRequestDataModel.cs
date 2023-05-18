@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -84,6 +84,11 @@ namespace Avalara.AvaTax.RestClient
         /// Flag if the request is a clone of a current filing calendar
         /// </summary>
         public Boolean? isClone { get; set; }
+
+        /// <summary>
+        /// Auto Lock Override Day
+        /// </summary>
+        public Int32? autoLockOverrideDay { get; set; }
 
         /// <summary>
         /// The two character ISO 3166 country code of the country that issued the tax form for this filing calendar.

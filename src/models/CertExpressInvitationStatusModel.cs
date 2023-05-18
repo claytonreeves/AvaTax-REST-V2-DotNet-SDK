@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -24,6 +24,8 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The status of the CertExpress invitation for this customer. If this status says
+        /// InProgress then CertExpress website is currently building a landing page for the customer. 
+        /// Please wait about 10 seconds and fetch this request again to see when it will be ready.
         /// </summary>
         public CertExpressInvitationStatus? status { get; set; }
 

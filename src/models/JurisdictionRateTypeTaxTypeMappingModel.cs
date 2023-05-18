@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -86,6 +86,11 @@ namespace Avalara.AvaTax.RestClient
         /// Rate Type to which this jurisdiction is applicable
         /// </summary>
         public String rateTypeId { get; set; }
+
+        /// <summary>
+        /// StateFips value of this jurisdiction
+        /// </summary>
+        public String stateFips { get; set; }
 
         /// <summary>
         /// The date this jurisdiction starts to take effect on tax calculations

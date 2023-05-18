@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -36,6 +36,23 @@ namespace Avalara.AvaTax.RestClient
         /// your company has no plans to stop doing business at this address.
         /// </summary>
         public DateTime? endDate { get; set; }
+
+        /// <summary>
+        /// The type group of nexus that this company is declaring
+        /// Use [ListTaxTypeGroups](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListTaxTypeGroups/) API for a list of nexus tax type groups.
+        ///  
+        /// This field is defined by Avalara. All Avalara-defined fields must match an Avalara-defined nexus object found by calling `ListNexus`.
+        /// NOTE: This optional field will trigger nexus subtype lookup when populated. When using make sure TaxTypeGroup matches corresponding NexusTaxTypeGroup
+        /// </summary>
+        public String taxTypeGroup { get; set; }
+
+        /// <summary>
+        /// The type of nexus that this company is declaring.Replaces NexusTypeId.
+        /// Use [ListNexusTaxTypeGroups](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListNexusTaxTypeGroups/) API for a list of nexus tax type groups.
+        ///  
+        /// This field is defined by Avalara. All Avalara-defined fields must match an Avalara-defined nexus object found by calling `ListNexus`.
+        /// </summary>
+        public String nexusTaxTypeGroup { get; set; }
 
         /// <summary>
         /// First line of the street address

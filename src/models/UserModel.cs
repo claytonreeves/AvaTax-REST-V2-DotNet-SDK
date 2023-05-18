@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -91,6 +91,11 @@ namespace Avalara.AvaTax.RestClient
         /// Matches the subjectId of corresponding user record in AI.
         /// </summary>
         public String subjectId { get; set; }
+
+        /// <summary>
+        /// The date/time when this record was migrated to Avalara Identity modified.
+        /// </summary>
+        public String migratedDate { get; set; }
 
         /// <summary>
         /// Suppress new user email

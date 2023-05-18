@@ -2,9 +2,10 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
-namespace Tests.Avalara.AvaTax.RestClient.net45
+namespace Avalara.AvaTax.RestClient.Test.net45
 {
     [TestFixture]
     public class FreeTaxRatesTest
@@ -19,12 +20,15 @@ namespace Tests.Avalara.AvaTax.RestClient.net45
         public void Setup()
         {
             try {
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 // Create a client and set up authentication
                 Client = new AvaTaxClient(typeof(FreeTaxRatesTest).Assembly.FullName,
                     typeof(FreeTaxRatesTest).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+
+                
             } catch (Exception ex) {
                 Assert.Fail("Exception in SetUp: " + ex);
             }

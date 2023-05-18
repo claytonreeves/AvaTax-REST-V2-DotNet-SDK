@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -41,6 +41,11 @@ namespace Avalara.AvaTax.RestClient
         /// If a list of status values is to be displayed in a dropdown, they should be displayed in this numeric order.
         /// </summary>
         public Int32? sortOrder { get; set; }
+
+        /// <summary>
+        /// The active Flag of this tax authority type.
+        /// </summary>
+        public Boolean? activeFlag { get; set; }
 
 
         /// <summary>

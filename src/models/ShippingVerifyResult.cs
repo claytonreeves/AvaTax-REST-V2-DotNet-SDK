@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxBeverageClient
  */
 
@@ -43,9 +43,9 @@ namespace Avalara.AvaTax.RestClient
         public String failureMessages { get; set; }
 
         /// <summary>
-        /// An enumeration of all the failure codes received across all lines.
+        /// An enumeration of all the failure codes received across all lines. Note: AlcoholContentLimitExceeded is included in API versions 2.2 and later.
         /// </summary>
-        public List<String> failureCodes { get; set; }
+        public List<FailureCodes> failureCodes { get; set; }
 
         /// <summary>
         /// An enumeration of all the warning codes received across all lines that a determination could not be made for.

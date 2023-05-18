@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 /*
  * AvaTax Software Development Kit for C#
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author     Genevieve Conty <genevieve.conty@avalara.com>
- * @author     Greg Hester <greg.hester@avalara.com>
- * @copyright  2004-2019 Avalara, Inc.
+ * @author     Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author     Sachin Baijal <sachin.baijal@avalara.com>
+ * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    21.12.0
+ * @version    23.5.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
 namespace Avalara.AvaTax.RestClient
 {
-    public partial class AvaTaxClient
+    public partial class AvaTaxClient : IAvaTaxClient
     {
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "21.12.0"; } }
+        public static string API_VERSION { get { return "23.5.0"; } }
 
 #region Methods
 
@@ -44,7 +44,7 @@ namespace Avalara.AvaTax.RestClient
         /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
         /// please log onto the AvaTax website or call the `ActivateAccount` API.
         ///  
-        /// You can only reset license with 'Default' license key name. 
+        /// You can only reset license with 'Default' license key name.
         /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
         ///  
         /// When you call this API, all account administrators for this account will receive an email with the newly updated license key.
@@ -53,7 +53,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -62,7 +62,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<LicenseKeyModel>("POST", path, model);
         }
 
@@ -84,7 +84,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account to activate</param>
@@ -93,7 +93,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AccountModel>("POST", path, model);
         }
 
@@ -119,7 +119,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account you wish to audit.</param>
@@ -145,7 +145,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("end", endDate);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<AuditModel>>("GET", path, null);
         }
 
@@ -167,7 +167,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -176,7 +176,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<LicenseKeyModel>("POST", path, model);
         }
 
@@ -193,7 +193,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -203,7 +203,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -220,7 +220,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account to retrieve</param>
@@ -230,7 +230,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AccountModel>("GET", path, null);
         }
 
@@ -254,7 +254,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -262,7 +262,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<AccountConfigurationModel>>("GET", path, null);
         }
 
@@ -273,7 +273,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account to retrieve</param>
@@ -283,7 +283,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AccountLicenseKeyModel>("GET", path, null);
         }
 
@@ -296,7 +296,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account to retrieve</param>
@@ -304,7 +304,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekeys");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<AccountLicenseKeyModel>>("GET", path, null);
         }
 
@@ -328,7 +328,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
@@ -344,7 +344,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<AccountModel>>("GET", path, null);
         }
 
@@ -368,7 +368,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -377,7 +377,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<AccountConfigurationModel>>("POST", path, model);
         }
 
@@ -400,7 +400,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AutoAddress.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -423,7 +423,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
             path.AddQuery("textCase", textCase);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AddressResolutionModel>("GET", path, null);
         }
 
@@ -441,7 +441,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AutoAddress.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -449,7 +449,7 @@ namespace Avalara.AvaTax.RestClient
         public AddressResolutionModel ResolveAddressPost(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AddressResolutionModel>("POST", path, model);
         }
 
@@ -469,7 +469,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AdvancedRuleLookupFileModel>("POST", path, model);
         }
 
@@ -488,7 +488,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -507,7 +507,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<AdvancedRuleLookupFileModel>>("GET", path, null);
         }
 
@@ -526,7 +526,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AdvancedRuleLookupFileModel>("GET", path, null);
         }
 
@@ -546,7 +546,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AdvancedRuleLookupFileModel>("PUT", path, model);
         }
 
@@ -568,7 +568,7 @@ namespace Avalara.AvaTax.RestClient
         public List<AvaFileFormModel> CreateAvaFileForms(List<AvaFileFormModel> model)
         {
             var path = new AvaTaxPath("/api/v2/avafileforms");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<AvaFileFormModel>>("POST", path, model);
         }
 
@@ -590,7 +590,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -603,7 +603,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -612,7 +612,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AvaFileFormModel>("GET", path, null);
         }
 
@@ -626,7 +626,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -641,7 +641,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<AvaFileFormModel>>("GET", path, null);
         }
 
@@ -665,7 +665,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AvaFileFormModel>("PUT", path, model);
         }
 
@@ -689,7 +689,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -699,7 +699,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}/cancel");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<BatchModel>("POST", path, null);
         }
 
@@ -730,7 +730,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -739,7 +739,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<BatchModel>>("POST", path, model);
         }
 
@@ -768,7 +768,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -777,7 +777,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/transactions");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CreateTransactionBatchResponseModel>("POST", path, model);
         }
 
@@ -799,7 +799,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: CSPAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, CSPAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -809,7 +809,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -822,7 +822,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this batch</param>
@@ -834,7 +834,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallFile("GET", path, null);
         }
 
@@ -861,7 +861,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this batch</param>
@@ -871,7 +871,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<BatchModel>("GET", path, null);
         }
 
@@ -904,7 +904,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these batches</param>
@@ -922,7 +922,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<BatchModel>>("GET", path, null);
         }
 
@@ -952,7 +952,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* files</param>
@@ -968,7 +968,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<BatchModel>>("GET", path, null);
         }
 
@@ -989,13 +989,13 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1007,7 +1007,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CertExpressInvitationStatusModel>>("POST", path, model);
         }
 
@@ -1028,13 +1028,13 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1049,7 +1049,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CertExpressInvitationModel>("GET", path, null);
         }
 
@@ -1070,13 +1070,13 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1097,7 +1097,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertExpressInvitationModel>>("GET", path, null);
         }
 
@@ -1130,7 +1130,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1142,7 +1142,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
             path.AddQuery("$preValidatedExemptionReason", preValidatedExemptionReason);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CertificateModel>>("POST", path, model);
         }
 
@@ -1167,7 +1167,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1178,7 +1178,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -1204,7 +1204,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1219,7 +1219,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$page", page);
             path.AddQuery("$type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallFile("GET", path, null);
         }
 
@@ -1248,7 +1248,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1265,7 +1265,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CertificateModel>("GET", path, null);
         }
 
@@ -1284,7 +1284,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1293,7 +1293,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ProvisionStatusModel>("GET", path, null);
         }
 
@@ -1319,7 +1319,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1331,7 +1331,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateAttributeModel>>("POST", path, model);
         }
 
@@ -1358,7 +1358,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1370,7 +1370,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CustomerModel>>("POST", path, model);
         }
 
@@ -1396,7 +1396,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1407,7 +1407,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateAttributeModel>>("GET", path, null);
         }
 
@@ -1433,7 +1433,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1447,7 +1447,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CustomerModel>>("GET", path, null);
         }
 
@@ -1476,7 +1476,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1499,7 +1499,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateModel>>("GET", path, null);
         }
 
@@ -1520,7 +1520,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1529,7 +1529,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ProvisionStatusModel>("POST", path, null);
         }
 
@@ -1555,7 +1555,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1567,7 +1567,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateAttributeModel>>("POST", path, model);
         }
 
@@ -1595,7 +1595,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1607,7 +1607,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CustomerModel>>("POST", path, model);
         }
 
@@ -1630,7 +1630,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1642,7 +1642,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CertificateModel>("PUT", path, model);
         }
 
@@ -1668,7 +1668,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1680,7 +1680,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallString("POST", path, file);
         }
 
@@ -1715,7 +1715,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the company to check if its integration is certified.</param>
@@ -1723,7 +1723,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/certify");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallString("GET", path, null);
         }
 
@@ -1748,7 +1748,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -1757,7 +1757,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallString("POST", path, model);
         }
 
@@ -1781,14 +1781,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="model">Information about the company you wish to create.</param>
         public CompanyModel CompanyInitialize(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyModel>("POST", path, model);
         }
 
@@ -1805,14 +1805,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="model">Either a single company object or an array of companies to create</param>
         public List<CompanyModel> CreateCompanies(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CompanyModel>>("POST", path, model);
         }
 
@@ -1835,7 +1835,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this company parameter.</param>
@@ -1844,7 +1844,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CompanyParameterDetailModel>>("POST", path, model);
         }
 
@@ -1867,16 +1867,20 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The unique identifier of the company</param>
+        /// <param name="businessUnit">The company's business unit</param>
+        /// <param name="subscriptionType">The company's subscription type</param>
         /// <param name="model">The funding initialization request</param>
-        public FundingStatusModel CreateFundingRequest(Int32 id, FundingInitiateModel model)
+        public FundingStatusModel CreateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType, FundingInitiateModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding/setup");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            path.AddQuery("businessUnit", businessUnit);
+            path.AddQuery("subscriptionType", subscriptionType);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FundingStatusModel>("POST", path, model);
         }
 
@@ -1889,7 +1893,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the company you wish to delete.</param>
@@ -1897,7 +1901,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -1915,7 +1919,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -1925,7 +1929,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -1941,7 +1945,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1950,7 +1954,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FundingConfigurationModel>("GET", path, null);
         }
 
@@ -1966,7 +1970,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -1977,7 +1981,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
             path.ApplyField("companyId", companyId);
             path.AddQuery("currency", currency);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<FundingConfigurationModel>>("GET", path, null);
         }
 
@@ -2002,7 +2006,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the company to retrieve.</param>
@@ -2015,7 +2019,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyModel>("GET", path, null);
         }
 
@@ -2039,7 +2043,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -2047,7 +2051,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CompanyConfigurationModel>>("GET", path, null);
         }
 
@@ -2066,7 +2070,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId"></param>
@@ -2076,7 +2080,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyParameterDetailModel>("GET", path, null);
         }
 
@@ -2102,7 +2106,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -2110,8 +2114,37 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallString("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Get ACH entry detail report for company and period
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        /// Returns a list of ACH entry details for the given company and period.
+        /// Each object in the result is an ach entry trace record for a payment made on behalf of this company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="id">The unique identifier of the company</param>
+        /// <param name="periodyear">The period year</param>
+        /// <param name="periodmonth">The period month</param>
+        public List<ACHEntryDetailModel> ListACHEntryDetailsForCompany(Int32 id, Int32 periodyear, Int32 periodmonth)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{id}/paymentdetails/{periodyear}/{periodmonth}");
+            path.ApplyField("id", id);
+            path.ApplyField("periodyear", periodyear);
+            path.ApplyField("periodmonth", periodmonth);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ACHEntryDetailModel>>("GET", path, null);
         }
 
 
@@ -2132,7 +2165,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -2148,7 +2181,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CompanyParameterDetailModel>>("GET", path, null);
         }
 
@@ -2165,7 +2198,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The unique identifier of the company</param>
@@ -2173,7 +2206,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<FundingStatusModel>>("GET", path, null);
         }
 
@@ -2188,13 +2221,13 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         public FetchResult<MrsCompanyModel> ListMrsCompanies()
         {
             var path = new AvaTaxPath("/api/v2/companies/mrs");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<MrsCompanyModel>>("GET", path, null);
         }
 
@@ -2223,7 +2256,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
@@ -2239,7 +2272,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CompanyModel>>("GET", path, null);
         }
 
@@ -2263,7 +2296,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -2272,7 +2305,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CompanyConfigurationModel>>("POST", path, model);
         }
 
@@ -2295,7 +2328,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the company you wish to update.</param>
@@ -2304,7 +2337,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyModel>("PUT", path, model);
         }
 
@@ -2323,7 +2356,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -2334,43 +2367,8 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyParameterDetailModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Retrieve jurisdiction rate information for tax authority
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="taxAuthorityId">Used to limit the jurisdictions returned.</param>
-        /// <param name="effectiveDate">Used to limit the jurisdictions returned.</param>
-        /// <param name="endDate">Used to limit the jurisdictions returned.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="include">A comma separated list of objects to fetch underneath this jurisdiction.</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public ComplianceJurisdictionRateModel QueryTaxAuthorityJurisdictionRates(Int32? taxAuthorityId, DateTime? effectiveDate, DateTime? endDate, String filter, String include, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/compliance/taxauthorityjurisdictionrates");
-            path.AddQuery("taxAuthorityId", taxAuthorityId);
-            path.AddQuery("effectiveDate", effectiveDate);
-            path.AddQuery("endDate", endDate);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<ComplianceJurisdictionRateModel>("GET", path, null);
         }
 
 
@@ -2384,7 +2382,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this contact.</param>
@@ -2393,7 +2391,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ContactModel>>("POST", path, model);
         }
 
@@ -2406,7 +2404,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this contact.</param>
@@ -2416,7 +2414,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -2431,7 +2429,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company for this contact</param>
@@ -2441,7 +2439,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ContactModel>("GET", path, null);
         }
 
@@ -2457,7 +2455,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these contacts</param>
@@ -2473,7 +2471,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ContactModel>>("GET", path, null);
         }
 
@@ -2491,7 +2489,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -2505,7 +2503,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ContactModel>>("GET", path, null);
         }
 
@@ -2522,7 +2520,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this contact belongs to.</param>
@@ -2533,7 +2531,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ContactModel>("PUT", path, model);
         }
 
@@ -2560,7 +2558,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2570,7 +2568,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CustomerModel>>("POST", path, model);
         }
 
@@ -2594,7 +2592,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2605,7 +2603,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CustomerModel>("DELETE", path, null);
         }
 
@@ -2635,7 +2633,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2648,7 +2646,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CustomerModel>("GET", path, null);
         }
 
@@ -2675,7 +2673,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2687,7 +2685,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CustomerAttributeModel>>("PUT", path, model);
         }
 
@@ -2711,7 +2709,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2723,7 +2721,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateModel>>("POST", path, model);
         }
 
@@ -2748,7 +2746,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2760,7 +2758,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/billto/{code}/shipto/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("code", code);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CustomerModel>("POST", path, model);
         }
 
@@ -2787,7 +2785,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2798,7 +2796,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CustomerAttributeModel>>("GET", path, null);
         }
 
@@ -2822,7 +2820,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2847,7 +2845,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateModel>>("GET", path, null);
         }
 
@@ -2874,7 +2872,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2889,7 +2887,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ExemptionStatusModel>("GET", path, null);
         }
 
@@ -2918,7 +2916,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2937,7 +2935,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CustomerModel>>("GET", path, null);
         }
 
@@ -2964,7 +2962,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -2976,7 +2974,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CustomerAttributeModel>>("PUT", path, model);
         }
 
@@ -3000,7 +2998,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3012,7 +3010,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateModel>>("POST", path, model);
         }
 
@@ -3036,7 +3034,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3048,7 +3046,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CustomerModel>("PUT", path, model);
         }
 
@@ -3061,7 +3059,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3071,7 +3069,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<DataSourceModel>>("POST", path, model);
         }
 
@@ -3084,7 +3082,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3095,7 +3093,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -3108,7 +3106,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3119,7 +3117,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<DataSourceModel>("GET", path, null);
         }
 
@@ -3132,7 +3130,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3149,7 +3147,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<DataSourceModel>>("GET", path, null);
         }
 
@@ -3165,7 +3163,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3180,7 +3178,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<DataSourceModel>>("GET", path, null);
         }
 
@@ -3193,7 +3191,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3205,7 +3203,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<DataSourceModel>("PUT", path, model);
         }
 
@@ -3237,7 +3235,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
@@ -3263,7 +3261,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SkyscraperStatusModel>>("GET", path, null);
         }
 
@@ -3286,7 +3284,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<MarketplaceModel>>("GET", path, null);
         }
 
@@ -3314,7 +3312,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<AvaFileFormModel>>("GET", path, null);
         }
 
@@ -3345,7 +3343,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CertificateAttributeModel>>("GET", path, null);
         }
 
@@ -3374,7 +3372,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ExemptionReasonModel>>("GET", path, null);
         }
 
@@ -3403,7 +3401,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ExposureZoneModel>>("GET", path, null);
         }
 
@@ -3428,7 +3426,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ClassificationParameterUsageMapModel>>("GET", path, null);
         }
 
@@ -3453,7 +3451,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CommunicationsTSPairModel>>("GET", path, null);
         }
 
@@ -3477,7 +3475,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CommunicationsTransactionTypeModel>>("GET", path, null);
         }
 
@@ -3501,7 +3499,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CommunicationsTSPairModel>>("GET", path, null);
         }
 
@@ -3526,7 +3524,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<IsoCountryModel>>("GET", path, null);
         }
 
@@ -3556,7 +3554,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CoverLetterModel>>("GET", path, null);
         }
 
@@ -3594,7 +3592,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
@@ -3618,7 +3616,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<HsCodeModel> ListCrossBorderSections()
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
@@ -3644,7 +3642,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CurrencyModel>>("GET", path, null);
         }
 
@@ -3671,7 +3669,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<EntityUseCodeModel>>("GET", path, null);
         }
 
@@ -3695,7 +3693,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<FilingFrequencyModel>>("GET", path, null);
         }
 
@@ -3712,7 +3710,7 @@ namespace Avalara.AvaTax.RestClient
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3723,7 +3721,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionModel>>("GET", path, null);
         }
 
@@ -3766,16 +3764,18 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
 
         /// <summary>
-        /// List jurisdictions based on the TaxType, TaxSubType and RateType provided
+        /// List jurisdictions based on the provided taxTypeId, taxSubTypeId, country, and rateTypeId
         /// </summary>
         /// <remarks>
-        /// Returns a list of all Avalara-supported taxing jurisdictions filtered by TaxType, TaxSubType and RateType.
+        /// Returns a list of all Avalara-supported taxing jurisdictions filtered by taxTypeId, taxSubTypeId, country, and rateTypeId.
+        ///  
+        /// You can optionally pass region as a query parameter to retrieve jurisdictions that are under that region.
         ///  
         /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
         /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate > '2016-01-01'
@@ -3784,28 +3784,51 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="country">The country for which you want to retrieve the jurisdiction information</param>
-        /// <param name="region">The region for which you want to retrieve the jurisdiction information</param>
         /// <param name="taxTypeId">The taxtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="rateTypeId">The ratetype for which you want to retrieve the jurisdiction information</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, country, state, jurisdictionCode, longName, taxTypeId, taxSubTypeId, taxTypeGroupId, rateTypeId</param>
+        /// <param name="region">The region for which you want to retrieve the jurisdiction information</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, country, state, jurisdictionCode, longName, taxTypeId, taxSubTypeId, taxTypeGroupId, rateTypeId, stateFips</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<JurisdictionRateTypeTaxTypeMappingModel> ListJurisdictionsByRateTypeTaxTypeMapping(String country, String region, String taxTypeId, String taxSubTypeId, String rateTypeId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<JurisdictionRateTypeTaxTypeMappingModel> ListJurisdictionsByRateTypeTaxTypeMapping(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/countries/{country}/regions/{region}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
             path.ApplyField("country", country);
-            path.ApplyField("region", region);
             path.ApplyField("taxTypeId", taxTypeId);
             path.ApplyField("taxSubTypeId", taxSubTypeId);
             path.AddQuery("rateTypeId", rateTypeId);
+            path.AddQuery("region", region);
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List jurisdiction types based on the provided taxTypeId, taxSubTypeId, country, and rateTypeId
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all applicable jurisdiction types based on country, taxTypeId, taxSubTypeId, and rateTypeId
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="country">The country for which you want to retrieve the jurisdiction information</param>
+        /// <param name="taxTypeId">The taxtype for which you want to retrieve the jurisdiction information</param>
+        /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the jurisdiction information</param>
+        /// <param name="rateTypeId">The ratetype for which you want to retrieve the jurisdiction information</param>
+        public List<String> ListJurisdictionTypesByRateTypeTaxTypeMapping(String country, String taxTypeId, String taxSubTypeId, String rateTypeId)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictionTypes/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
+            path.ApplyField("country", country);
+            path.ApplyField("taxTypeId", taxTypeId);
+            path.ApplyField("taxSubTypeId", taxSubTypeId);
+            path.AddQuery("rateTypeId", rateTypeId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<String>>("GET", path, null);
         }
 
 
@@ -3850,7 +3873,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<LocationQuestionModel>>("GET", path, null);
         }
 
@@ -3875,7 +3898,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SkyscraperStatusModel>>("GET", path, null);
         }
 
@@ -3898,7 +3921,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<MarketplaceLocationModel>>("GET", path, null);
         }
 
@@ -3923,7 +3946,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -3979,7 +4002,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4006,7 +4029,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4035,7 +4058,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4058,7 +4081,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="formCode">The form code that we are looking up the nexus for</param>
@@ -4066,7 +4089,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
             path.ApplyField("formCode", formCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NexusByTaxFormModel>("GET", path, null);
         }
 
@@ -4093,7 +4116,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4117,7 +4140,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusTaxTypeGroupModel>>("GET", path, null);
         }
 
@@ -4141,7 +4164,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeCustomerFundingOptionModel>>("GET", path, null);
         }
 
@@ -4165,7 +4188,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeCustomerTypeModel>>("GET", path, null);
         }
 
@@ -4189,7 +4212,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeFilingTypeModel>>("GET", path, null);
         }
 
@@ -4213,7 +4236,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticePriorityModel>>("GET", path, null);
         }
 
@@ -4237,7 +4260,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeReasonModel>>("GET", path, null);
         }
 
@@ -4261,7 +4284,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeResponsibilityModel>>("GET", path, null);
         }
 
@@ -4285,7 +4308,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeRootCauseModel>>("GET", path, null);
         }
 
@@ -4298,7 +4321,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify all the different tax notice statuses.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder, activeFlag</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4309,7 +4332,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeStatusModel>>("GET", path, null);
         }
 
@@ -4333,7 +4356,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NoticeTypeModel>>("GET", path, null);
         }
 
@@ -4358,7 +4381,32 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ParameterModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the list of Avalara-supported parameters based on account subscriptions.
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of Avalara-supported parameters based on account subscriptions.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="accountId">The ID of the account to retrieve the parameters.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* serviceTypes, regularExpression, values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ParameterModel> ListParametersByAccount(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/accounts/{accountId}/parameters");
+            path.ApplyField("accountId", accountId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ParameterModel>>("GET", path, null);
         }
 
@@ -4377,10 +4425,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '?' with '\_-ava3f-\_' For example: 'Company?Code' becomes 'Company_-ava3f-_Code'
         /// * Replace '%' with '\_-ava25-\_' For example: 'Company%Code' becomes 'Company_-ava25-_Code'
         /// * Replace '#' with '\_-ava23-\_' For example: 'Company#Code' becomes 'Company_-ava23-_Code'
+        ///  
+        /// For Item Code other than the five given above below two should also be used
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyCode">Company code.</param>
@@ -4398,7 +4450,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ParameterModel>>("GET", path, null);
         }
 
@@ -4423,7 +4475,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ParameterUsageModel>>("GET", path, null);
         }
 
@@ -4443,7 +4495,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<String>>("GET", path, null);
         }
 
@@ -4459,14 +4511,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<PostalCodeModel> ListPostalCodes(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeExpiredPostalCodes">If set to true, returns expired postal codes. Defaults to false</param>
+        public FetchResult<PostalCodeModel> ListPostalCodes(String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeExpiredPostalCodes)
         {
             var path = new AvaTaxPath("/api/v2/definitions/postalcodes");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            path.AddQuery("includeExpiredPostalCodes", includeExpiredPostalCodes);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<PostalCodeModel>>("GET", path, null);
         }
 
@@ -4497,7 +4551,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<PreferredProgramModel>>("GET", path, null);
         }
 
@@ -4525,7 +4579,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
         }
 
@@ -4563,7 +4617,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
         }
 
@@ -4589,7 +4643,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<RateTypeModel>>("GET", path, null);
         }
 
@@ -4619,7 +4673,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<RateTypesModel>>("GET", path, null);
         }
 
@@ -4644,7 +4698,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
         }
 
@@ -4671,7 +4725,44 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the list of applicable regions by country tax type, tax sub type, and rate type for a given JurisdictionTypeId
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all ISO 3166 region codes for a specific country code and their US English friendly names.
+        /// This API is intended to be used as a way to provide a dropdown box in your website to allow customers to select a region
+        /// within the country for shipping addresses.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company for which you want to retrieve the applicable regions</param>
+        /// <param name="country">The country for which you want to retrieve the regions</param>
+        /// <param name="taxTypeId">The taxTypeId for which you want to retrieve the regions. Example values include Autimotive, tires, Lodging, S, U, I, O, All, etc. Run the "/api/v2/definitions/taxtypes/countries/{country}?companyId=" endpoint for a list of taxTypeId values.</param>
+        /// <param name="taxSubTypeId">The taxSubType for which you want to retrieve the regions. Example values include Accommodations, BikeTax, IGST, S, U, All, etc. Run the "api/v2/definitions/taxsubtypes" endpoint for a list of taxSubTypes values.</param>
+        /// <param name="rateTypeId">The rateTypeId for which you want to retrieve the regions.
+        ///  Note: The rateTypeId is an integer. Run the "/api/v2/definitions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/ratetypes" endpoint for a list of rateTypeId values."</param>
+        /// <param name="jurisdictionTypeId">The JurisdictionTypeId for which you want to retrieve the regions.
+        ///  This is a three-character string. Accepted values are ```CNT``` (country), ```STA``` (state), ```CTY``` (county), ```CIT``` (city), or ```STJ``` (special jurisdiction).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<IsoRegionModel> ListRegionsByCountryAndTaxTypeAndTaxSubTypeAndRateType(Int32 companyId, String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String jurisdictionTypeId, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/companies/{companyId}/countries/{country}/regions/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/rateTypeId/{rateTypeId}/jurisdictionTypeId/{jurisdictionTypeId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("country", country);
+            path.ApplyField("taxTypeId", taxTypeId);
+            path.ApplyField("taxSubTypeId", taxSubTypeId);
+            path.ApplyField("rateTypeId", rateTypeId);
+            path.ApplyField("jurisdictionTypeId", jurisdictionTypeId);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
         }
 
@@ -4695,7 +4786,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ResourceFileTypeModel>>("GET", path, null);
         }
 
@@ -4720,7 +4811,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ReturnsParameterUsageModel>>("GET", path, null);
         }
 
@@ -4745,7 +4836,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SecurityRoleModel>>("GET", path, null);
         }
 
@@ -4760,7 +4851,7 @@ namespace Avalara.AvaTax.RestClient
         /// You cannot change your subscriptions directly through the API.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4771,7 +4862,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SubscriptionTypeModel>>("GET", path, null);
         }
 
@@ -4794,7 +4885,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TagsModel>>("GET", path, null);
         }
 
@@ -4818,7 +4909,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxAuthorityModel>>("GET", path, null);
         }
 
@@ -4844,7 +4935,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxAuthorityFormModel>>("GET", path, null);
         }
 
@@ -4868,7 +4959,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxAuthorityTypeModel>>("GET", path, null);
         }
 
@@ -4885,7 +4976,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -4899,7 +4990,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
@@ -4920,7 +5011,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/taxcodetypes");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxCodeTypesModel>("GET", path, null);
         }
 
@@ -4944,7 +5035,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<FormMasterModel>>("GET", path, null);
         }
 
@@ -4968,7 +5059,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
 
@@ -4983,20 +5074,22 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="country">The country to examine for taxsubtype</param>
         /// <param name="taxTypeId">The taxType for the country to examine for taxsubtype</param>
+        /// <param name="companyId">Id of the company the user wish to fetch the applicable tax sub types</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<TaxSubTypeModel> ListTaxSubTypesByCountryAndTaxType(String country, String taxTypeId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<TaxSubTypeModel> ListTaxSubTypesByCountryAndTaxType(String country, String taxTypeId, Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxsubtypes/countries/{country}/taxtypes/{taxTypeId}");
             path.ApplyField("country", country);
             path.ApplyField("taxTypeId", taxTypeId);
+            path.AddQuery("companyId", companyId);
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
 
@@ -5024,7 +5117,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
 
@@ -5048,7 +5141,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxTypeGroupModel>>("GET", path, null);
         }
 
@@ -5073,7 +5166,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxTypeModel>>("GET", path, null);
         }
 
@@ -5102,7 +5195,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<UnitOfBasisModel>>("GET", path, null);
         }
 
@@ -5127,7 +5220,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<UomModel>>("GET", path, null);
         }
 
@@ -5144,7 +5237,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
@@ -5153,7 +5246,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<CompanyDistanceThresholdModel>>("POST", path, model);
         }
 
@@ -5170,7 +5263,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
@@ -5180,7 +5273,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5197,7 +5290,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this DistanceThreshold object</param>
@@ -5207,7 +5300,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyDistanceThresholdModel>("GET", path, null);
         }
 
@@ -5224,7 +5317,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company whose DistanceThreshold objects you wish to list.</param>
@@ -5242,7 +5335,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null);
         }
 
@@ -5262,7 +5355,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -5278,7 +5371,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null);
         }
 
@@ -5298,7 +5391,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold object.</param>
@@ -5309,7 +5402,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyDistanceThresholdModel>("PUT", path, model);
         }
 
@@ -5324,7 +5417,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company ID that will be issued this certificate.</param>
@@ -5333,7 +5426,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ECommerceTokenOutputModel>("POST", path, model);
         }
 
@@ -5348,7 +5441,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company ID that the refreshed certificate belongs to.</param>
@@ -5357,153 +5450,8 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ECommerceTokenOutputModel>>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Add or Edit options
-        /// </summary>
-        /// <remarks>
-        /// Returns a list of options for adding tax forms for the company and tax form code specified.
-        /// Returns edit options when modifying a filing calendar.
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="model">Cycle Safe Options Request</param>
-        public CycleSafeOptionResultModel CycleSafeOptions(Int32 companyId, CycleSafeEditRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/edit/cycleSafeOptions");
-            path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<CycleSafeOptionResultModel>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Delete a company return setting
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only and only available for users with Compliance access
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="companyId">The unique ID of the company</param>
-        /// <param name="filingCalendarId">The unique ID of the filing calendar that will remove setting</param>
-        /// <param name="companyReturnSettingId">The unique ID of the company return setting that will be deleted from the filing calendar</param>
-        public List<CompanyReturnSettingModel> DeleteCompanyReturnSettings(Int32 companyId, Int32 filingCalendarId, Int64 companyReturnSettingId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{filingCalendarId}/setting/{companyReturnSettingId}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingCalendarId", filingCalendarId);
-            path.ApplyField("companyReturnSettingId", companyReturnSettingId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<List<CompanyReturnSettingModel>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all legacy filing calendars for this company
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypes, taxAuthorityId, taxAuthorityName, taxAuthorityType, settings</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry">A comma separated list of countries</param>
-        /// <param name="returnRegion">A comma separated list of regions</param>
-        public FetchResult<FilingCalendarModel> LegacyFilingCalendars(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/Legacy");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<FetchResult<FilingCalendarModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a filing containing the return and all its accrual returns.
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="companyId">The ID of the company that owns these returns</param>
-        /// <param name="filingReturnId">The ID of the filing return</param>
-        public FetchResult<MultiTaxFilingModel> GetAccrualFilings(Int32 companyId, Int64 filingReturnId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/accrual/{filingReturnId}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingReturnId", filingReturnId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<FetchResult<MultiTaxFilingModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filed returns for the specified company in the year and month of a given filing period.
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only.*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser, CompanyUser, AccountUser, CompanyAdmin, AccountAdmin.
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="endPeriodMonth">The month of the period you are trying to retrieve</param>
-        /// <param name="endPeriodYear">The year of the period you are trying to retrieve</param>
-        /// <param name="frequency">The frequency of the return you are trying to retrieve</param>
-        /// <param name="status">The status of the return(s) you are trying to retrieve</param>
-        /// <param name="country">The country of the return(s) you are trying to retrieve</param>
-        /// <param name="region">The region of the return(s) you are trying to retrieve</param>
-        /// <param name="filingCalendarId">The filing calendar id of the return you are trying to retrieve</param>
-        /// <param name="taxformCode">The unique tax form code of the form.</param>
-        public FetchResult<FiledReturnModel> GetFiledReturns(Int32 companyId, Int32? endPeriodMonth, Int32? endPeriodYear, FilingFrequencyId? frequency, FilingStatusId? status, String country, String region, Int64? filingCalendarId, String taxformCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/filed");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("endPeriodMonth", endPeriodMonth);
-            path.AddQuery("endPeriodYear", endPeriodYear);
-            path.AddQuery("frequency", frequency);
-            path.AddQuery("status", status);
-            path.AddQuery("country", country);
-            path.AddQuery("region", region);
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            path.AddQuery("taxformCode", taxformCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<FetchResult<FiledReturnModel>>("GET", path, null);
         }
 
 
@@ -5515,7 +5463,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -5523,7 +5471,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/approve");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5552,7 +5500,7 @@ namespace Avalara.AvaTax.RestClient
         public FirmClientLinkageOutputModel CreateAndLinkNewFirmClientAccount(NewFirmClientAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/createandlinkclient");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("POST", path, model);
         }
 
@@ -5565,14 +5513,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="model">FirmClientLinkageInputModel</param>
         public FirmClientLinkageOutputModel CreateFirmClientLinkage(FirmClientLinkageInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("POST", path, model);
         }
 
@@ -5585,7 +5533,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -5593,7 +5541,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5606,7 +5554,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -5614,7 +5562,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("GET", path, null);
         }
 
@@ -5627,7 +5575,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* firmAccountName, clientAccountName</param>
@@ -5635,7 +5583,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
             path.AddQuery("$filter", filter);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<FirmClientLinkageOutputModel>>("GET", path, null);
         }
 
@@ -5648,7 +5596,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -5656,7 +5604,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reject");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5669,7 +5617,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -5677,7 +5625,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reset");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5690,7 +5638,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
@@ -5698,7 +5646,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/revoke");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5727,7 +5675,7 @@ namespace Avalara.AvaTax.RestClient
         public NewAccountModel RequestFreeTrial(FreeTrialRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NewAccountModel>("POST", path, model);
         }
 
@@ -5751,16 +5699,20 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The unique ID number of this funding request</param>
-        public FundingStatusModel ActivateFundingRequest(Int64 id)
+        /// <param name="businessUnit">The company's business unit</param>
+        /// <param name="subscriptionType">The company's subscription type</param>
+        public FundingStatusModel ActivateFundingRequest(Int64 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            path.AddQuery("businessUnit", businessUnit);
+            path.AddQuery("subscriptionType", subscriptionType);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FundingStatusModel>("GET", path, null);
         }
 
@@ -5782,16 +5734,20 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The unique ID number of this funding request</param>
-        public FundingStatusModel FundingRequestStatus(Int32 id)
+        /// <param name="businessUnit">The company's business unit</param>
+        /// <param name="subscriptionType">The company's subscription type</param>
+        public FundingStatusModel FundingRequestStatus(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            path.AddQuery("businessUnit", businessUnit);
+            path.AddQuery("subscriptionType", subscriptionType);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FundingStatusModel>("GET", path, null);
         }
 
@@ -5808,7 +5764,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -5818,7 +5774,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5837,7 +5793,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -5847,7 +5803,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5868,7 +5824,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this items.</param>
@@ -5877,7 +5833,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/upload");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemBulkUploadOutputModel>("POST", path, model);
         }
 
@@ -5896,7 +5852,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -5907,7 +5863,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ItemClassificationOutputModel>>("POST", path, model);
         }
 
@@ -5930,7 +5886,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item parameter.</param>
@@ -5941,7 +5897,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ItemParameterModel>>("POST", path, model);
         }
 
@@ -5962,7 +5918,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -5971,7 +5927,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ItemModel>>("POST", path, model);
         }
 
@@ -5986,19 +5942,82 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="model">Tags you wish to associate with the Item</param>
-        public List<ItemTagDetailModel> CreateItemTags(Int32 companyId, Int32 itemId, List<ItemTagDetailModel> model)
+        public List<ItemTagDetailOutputModel> CreateItemTags(Int32 companyId, Int32 itemId, List<ItemTagDetailInputModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<List<ItemTagDetailModel>>("POST", path, model);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ItemTagDetailOutputModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Create a new tax code classification request
+        /// </summary>
+        /// <remarks>
+        /// Creates a new tax code classification request.
+        ///  
+        /// Avalara AvaTax system tax codes represent various goods and services classified by industry or consumer categories and
+        /// major physical similarities. Taxability rules are associated with tax codes. Customers can map their Items to tax codes
+        /// allowing them to take advantage of thousands of tax rules in the AvaTax engine resulting in accurate taxability determinations.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that creates this request.</param>
+        /// <param name="model">The request you wish to create.</param>
+        public ItemTaxCodeClassificationRequestOutputModel CreateTaxCodeClassificationRequest(Int32 companyId, ItemTaxCodeClassificationRequestInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemTaxCodeClassificationRequestOutputModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a single item
+        /// </summary>
+        /// <remarks>
+        /// Deletes the item object at this URL.
+        ///  
+        /// Items are a way of separating your tax calculation process from your tax configuration details.
+        /// Use this endpoint to delete an existing item with item code.
+        ///  
+        /// Deleting an item will also delete the parameters, classifications, and product categories associated with that item.
+        ///  
+        /// NOTE: If your item code contains any of these characters /, +, ? or a space, please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: 'Item/Code' becomes 'Item_-ava2f-_Code'
+        /// * Replace '+' with '\_-ava2b-\_' For example: 'Item+Code' becomes 'Item_-ava2b-_Code'
+        /// * Replace '?' with '\_-ava3f-\_' For example: 'Item?Code' becomes 'Item_-ava3f-_Code'
+        /// * Replace '%' with '\_-ava25-\_' For example: 'Item%Code' becomes 'Item_-ava25-_Code'
+        /// * Replace '#' with '\_-ava23-\_' For example: 'Item#Code' becomes 'Item_-ava23-_Code'
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this item.</param>
+        /// <param name="itemCode">The code of the item you want to delete.</param>
+        public List<ErrorDetail> DeleteCatalogueItem(Int32 companyId, String itemCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue/{itemCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemCode", itemCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -6018,7 +6037,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -6028,7 +6047,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6045,7 +6064,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -6057,7 +6076,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6076,7 +6095,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -6088,7 +6107,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6103,7 +6122,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -6115,7 +6134,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("itemTagDetailId", itemTagDetailId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6130,7 +6149,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
@@ -6140,8 +6159,45 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Get status of classification requests of a company
+        /// </summary>
+        /// <remarks>
+        /// Get status of tax code classification requests of a company.
+        ///  
+        /// Avalara AvaTax system tax codes represent various goods and services classified by industry or consumer categories and
+        /// major physical similarities. Taxability rules are associated with tax codes. Customers can map their Items to tax codes
+        /// allowing them to take advantage of thousands of tax rules in the AvaTax engine resulting in accurate taxability determinations.
+        ///  
+        /// Enable includeClassificationDetails flag to get details of classification request status.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that defined these items</param>
+        /// <param name="includeClassificationDetails">A boolean field to get detailed classification status.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* classificationDetails, totalItems</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ItemTaxCodeClassificationRequestStatusOutputModel> GetClassificationStatus(Int32 companyId, Boolean? includeClassificationDetails, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$includeClassificationDetails", includeClassificationDetails);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ItemTaxCodeClassificationRequestStatusOutputModel>>("GET", path, null);
         }
 
 
@@ -6159,7 +6215,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -6171,7 +6227,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemModel>("GET", path, null);
         }
 
@@ -6188,7 +6244,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -6200,7 +6256,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemClassificationOutputModel>("GET", path, null);
         }
 
@@ -6219,7 +6275,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -6231,7 +6287,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemParameterModel>("GET", path, null);
         }
 
@@ -6246,7 +6302,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -6254,7 +6310,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* tagName</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        public FetchResult<ItemTagDetailModel> GetItemTags(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
+        public FetchResult<ItemTagDetailOutputModel> GetItemTags(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
@@ -6262,8 +6318,117 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<FetchResult<ItemTagDetailModel>>("GET", path, null);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ItemTagDetailOutputModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve premium classification for a company's item based on its ItemCode and SystemCode.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the premium classification for an ItemCode and SystemCode.
+        ///  
+        /// NOTE: If your item code contains any of these characters /, +, ?,",' ,% or #, please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: 'Item/Code' becomes 'Item_-ava2f-_Code'
+        /// * Replace '+' with '\_-ava2b-\_' For example: 'Item+Code' becomes 'Item_-ava2b-_Code'
+        /// * Replace '?' with '\_-ava3f-\_' For example: 'Item?Code' becomes 'Item_-ava3f-_Code'
+        /// * Replace '%' with '\_-ava25-\_' For example: 'Item%Code' becomes 'Item_-ava25-_Code'
+        /// * Replace '#' with '\_-ava23-\_' For example: 'Item#Code' becomes 'Item_-ava23-_Code'
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this item object</param>
+        /// <param name="itemCode">The ItemCode of the item for which you want to retrieve premium classification</param>
+        /// <param name="systemCode">The SystemCode for which you want to retrieve premium classification</param>
+        public ItemPremiumClassificationOutputModel GetPremiumClassification(Int32 companyId, String itemCode, String systemCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemCode}/premiumClassification/{systemCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemCode", itemCode);
+            path.ApplyField("systemCode", systemCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemPremiumClassificationOutputModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Get tax code recommendations
+        /// </summary>
+        /// <remarks>
+        /// Get tax code recommendations.
+        ///  
+        /// Avalara AvaTax system tax codes represent various goods and services classified by industry or consumer categories and
+        /// major physical similarities. Taxability rules are associated with tax codes. Customers can map their Items to tax codes
+        /// allowing them to take advantage of thousands of tax rules in the AvaTax engine resulting in accurate taxability determinations.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that defined these items</param>
+        /// <param name="requestId">The ID of the classification request</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* recommendations, url</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ItemTaxCodeRecommendationsOutputModel> GetTaxCodeRecommendations(Int32 companyId, Int32 requestId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode/{requestId}/recommendations");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("requestId", requestId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ItemTaxCodeRecommendationsOutputModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve Restrictions for Item by CountryOfImport
+        /// </summary>
+        /// <remarks>
+        /// Retrieve Restrictions for Item by CountryOfImport. This API will only return import restriction for the countryOfImport.
+        ///  
+        /// NOTE: If your item code contains any of these characters /, +, ? or a space, please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: 'Item/Code' becomes 'Item_-ava2f-_Code'
+        /// * Replace '+' with '\_-ava2b-\_' For example: 'Item+Code' becomes 'Item_-ava2b-_Code'
+        /// * Replace '?' with '\_-ava3f-\_' For example: 'Item?Code' becomes 'Item_-ava3f-_Code'
+        /// * Replace '%' with '\_-ava25-\_' For example: 'Item%Code' becomes 'Item_-ava25-_Code'
+        /// * Replace '#' with '\_-ava23-\_' For example: 'Item#Code' becomes 'Item_-ava23-_Code'
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this item object</param>
+        /// <param name="itemCode">ItemCode for the item</param>
+        /// <param name="countryOfImport">Country for which you want the restrictions for the Item.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ItemRestrictionOutputModel> ListImportRestrictions(Int32 companyId, String itemCode, String countryOfImport, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemCode}/restrictions/import/{countryOfImport}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemCode", itemCode);
+            path.ApplyField("countryOfImport", countryOfImport);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ItemRestrictionOutputModel>>("GET", path, null);
         }
 
 
@@ -6282,7 +6447,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -6300,7 +6465,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ItemClassificationOutputModel>>("GET", path, null);
         }
 
@@ -6322,7 +6487,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -6340,7 +6505,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ItemParameterModel>>("GET", path, null);
         }
 
@@ -6362,20 +6527,21 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         ///  
         /// You may specify Tag Name in the `tagName` query parameter if you want to filter items on the basis of tagName
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Parameters
         /// * Classifications
         /// * Tags
+        /// * Properties
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, classifications, parameters, tags</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, upc, classifications, parameters, tags, properties</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -6391,7 +6557,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("tagName", tagName);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ItemModel>>("GET", path, null);
         }
 
@@ -6414,10 +6580,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, classifications, parameters, tags</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, upc, classifications, parameters, tags, properties</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -6430,7 +6596,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ItemModel>>("GET", path, null);
         }
 
@@ -6453,12 +6619,12 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, classifications, parameters, tags</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, upc, classifications, parameters, tags, properties</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -6473,8 +6639,36 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ItemModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Create or update items from a product catalog.
+        /// </summary>
+        /// <remarks>
+        /// Creates/updates one or more item objects with additional properties and the AvaTax category attached to this company.
+        ///  
+        /// Items are a way of separating your tax calculation process from your tax configuration details. Use this endpoint to create
+        /// a new or update an existing item. This can be used to sync the items with Avalara. For example, an accounting software
+        /// system can use this to sync all their items from an ERP with Avalara.
+        ///  
+        /// Parameters and Classifications can be added with the Item.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this item.</param>
+        /// <param name="model">The items you want to create or update.</param>
+        public ItemCatalogueOutputModel SyncItemCatalogue(Int32 companyId, List<ItemCatalogueInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemCatalogueOutputModel>("POST", path, model);
         }
 
 
@@ -6497,7 +6691,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -6506,7 +6700,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/sync");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<SyncItemsResponseModel>("POST", path, model);
         }
 
@@ -6530,7 +6724,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
@@ -6541,7 +6735,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemModel>("PUT", path, model);
         }
 
@@ -6560,7 +6754,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -6573,7 +6767,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemClassificationOutputModel>("PUT", path, model);
         }
 
@@ -6592,7 +6786,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -6605,7 +6799,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemParameterModel>("PUT", path, model);
         }
 
@@ -6623,7 +6817,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -6632,7 +6826,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<JurisdictionOverrideModel>>("POST", path, model);
         }
 
@@ -6645,7 +6839,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -6655,7 +6849,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6673,7 +6867,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -6683,7 +6877,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<JurisdictionOverrideModel>("GET", path, null);
         }
 
@@ -6704,7 +6898,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -6722,7 +6916,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
@@ -6743,7 +6937,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country, Jurisdictions</param>
@@ -6759,7 +6953,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
@@ -6772,7 +6966,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that this jurisdictionoverride belongs to.</param>
@@ -6783,7 +6977,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<JurisdictionOverrideModel>("PUT", path, model);
         }
 
@@ -6806,7 +7000,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this location parameter.</param>
@@ -6817,7 +7011,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<LocationParameterModel>>("POST", path, model);
         }
 
@@ -6830,7 +7024,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this location.</param>
@@ -6839,7 +7033,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<LocationModel>>("POST", path, model);
         }
 
@@ -6852,7 +7046,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this location.</param>
@@ -6862,7 +7056,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6881,7 +7075,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -6893,7 +7087,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6915,7 +7109,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this location</param>
@@ -6927,7 +7121,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<LocationModel>("GET", path, null);
         }
 
@@ -6946,7 +7140,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -6958,7 +7152,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<LocationParameterModel>("GET", path, null);
         }
 
@@ -6980,7 +7174,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -6998,7 +7192,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<LocationParameterModel>>("GET", path, null);
         }
 
@@ -7022,7 +7216,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these locations</param>
@@ -7040,7 +7234,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<LocationModel>>("GET", path, null);
         }
 
@@ -7065,7 +7259,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isMarketplaceOutsideUsa, settings, parameters</param>
@@ -7081,7 +7275,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<LocationModel>>("GET", path, null);
         }
 
@@ -7096,7 +7290,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this location belongs to.</param>
@@ -7107,7 +7301,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<LocationModel>("PUT", path, model);
         }
 
@@ -7126,7 +7320,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -7139,7 +7333,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<LocationParameterModel>("PUT", path, model);
         }
 
@@ -7154,7 +7348,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this location</param>
@@ -7164,7 +7358,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/validate");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<LocationValidationModel>("GET", path, null);
         }
 
@@ -7194,7 +7388,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7208,7 +7402,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7242,7 +7436,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7253,7 +7447,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/audit");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AuditMultiDocumentModel>("GET", path, null);
         }
 
@@ -7281,7 +7475,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7289,7 +7483,7 @@ namespace Avalara.AvaTax.RestClient
         public MultiDocumentModel CommitMultiDocumentTransaction(CommitMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/commit");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7341,7 +7535,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7351,7 +7545,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7383,7 +7577,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7396,7 +7590,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("GET", path, null);
         }
 
@@ -7437,7 +7631,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7448,7 +7642,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("GET", path, null);
         }
 
@@ -7487,7 +7681,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7504,7 +7698,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<MultiDocumentModel>>("GET", path, null);
         }
 
@@ -7560,7 +7754,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7574,7 +7768,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7600,7 +7794,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7608,7 +7802,7 @@ namespace Avalara.AvaTax.RestClient
         public MultiDocumentModel VerifyMultiDocumentTransaction(VerifyMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/verify");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7637,7 +7831,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7649,7 +7843,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/void");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7680,7 +7874,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
@@ -7689,7 +7883,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<NexusModel>>("POST", path, model);
         }
 
@@ -7711,7 +7905,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this nexus parameter.</param>
@@ -7722,7 +7916,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<NexusParameterDetailModel>>("POST", path, model);
         }
 
@@ -7749,7 +7943,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that will own this nexus.</param>
@@ -7758,7 +7952,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byaddress");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<NexusByAddressModel>>("POST", path, model);
         }
 
@@ -7778,7 +7972,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
@@ -7790,7 +7984,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("cascadeDelete", cascadeDelete);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -7808,7 +8002,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -7820,7 +8014,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -7838,7 +8032,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
@@ -7848,7 +8042,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -7868,7 +8062,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
@@ -7880,7 +8074,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NexusModel>("GET", path, null);
         }
 
@@ -7904,7 +8098,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
@@ -7916,7 +8110,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NexusByTaxFormModel>("GET", path, null);
         }
 
@@ -7934,7 +8128,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -7946,7 +8140,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NexusParameterDetailModel>("GET", path, null);
         }
 
@@ -7969,7 +8163,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
@@ -7987,7 +8181,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -8010,7 +8204,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
@@ -8030,7 +8224,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -8051,7 +8245,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -8069,7 +8263,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusParameterDetailModel>>("GET", path, null);
         }
 
@@ -8092,7 +8286,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxTypeGroup, taxAuthorityId, taxName, parameters, taxableNexus</param>
@@ -8108,7 +8302,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -8139,7 +8333,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
@@ -8150,7 +8344,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NexusModel>("PUT", path, model);
         }
 
@@ -8169,7 +8363,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -8182,7 +8376,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NexusParameterDetailModel>("PUT", path, model);
         }
 
@@ -8195,7 +8389,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -8203,7 +8397,7 @@ namespace Avalara.AvaTax.RestClient
         public NoticeResponsibilityModel CreateNoticeResponsibilityType(CreateNoticeResponsibilityTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NoticeResponsibilityModel>("POST", path, model);
         }
 
@@ -8216,7 +8410,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -8224,7 +8418,7 @@ namespace Avalara.AvaTax.RestClient
         public NoticeRootCauseModel CreateNoticeRootCauseType(CreateNoticeRootCauseTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NoticeRootCauseModel>("POST", path, model);
         }
 
@@ -8237,7 +8431,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="responsibilityId">The unique ID of the responsibility type</param>
@@ -8245,7 +8439,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities/{responsibilityId}");
             path.ApplyField("responsibilityId", responsibilityId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8258,7 +8452,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="rootCauseId">The unique ID of the root cause type</param>
@@ -8266,7 +8460,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses/{rootCauseId}");
             path.ApplyField("rootCauseId", rootCauseId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8292,7 +8486,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The id of the notification you wish to mark as dismissed.</param>
@@ -8300,7 +8494,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}/dismiss");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NotificationModel>("PUT", path, null);
         }
 
@@ -8320,7 +8514,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The id of the notification to retrieve.</param>
@@ -8328,7 +8522,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NotificationModel>("GET", path, null);
         }
 
@@ -8351,7 +8545,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -8365,7 +8559,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<NotificationModel>>("GET", path, null);
         }
 
@@ -8391,7 +8585,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Provisioning:RequestNewAccount].
         /// </remarks>
@@ -8400,7 +8594,7 @@ namespace Avalara.AvaTax.RestClient
         public NewAccountModel RequestNewAccount(NewAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NewAccountModel>("POST", path, model);
         }
 
@@ -8414,7 +8608,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Provisioning:RequestNewAccount].
         /// </remarks>
@@ -8426,7 +8620,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/entitlements/{offer}");
             path.ApplyField("id", id);
             path.ApplyField("offer", offer);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<OfferModel>("POST", path, null);
         }
 
@@ -8443,14 +8637,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="model">The account you wish to create.</param>
         public List<AccountModel> CreateAccount(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<AccountModel>>("POST", path, model);
         }
 
@@ -8475,7 +8669,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [NotificationsAPI:Create].
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -8483,8 +8677,35 @@ namespace Avalara.AvaTax.RestClient
         public List<NotificationModel> CreateNotifications(List<NotificationModel> model)
         {
             var path = new AvaTaxPath("/api/v2/notifications");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<NotificationModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Create Avalara-supported subscription (ServiceTypes)
+        /// </summary>
+        /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Create one service/subscription object.
+        ///  
+        /// Returns the newly created Avalara-supported subscription (service) type.
+        /// This API is intended to be useful for adding new Avalara-supported subscription type (service type).
+        /// You may always contact Avalara's sales department for information on available products or services.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="model">The subscription type object you wish to create.</param>
+        public SubscriptionTypeModel CreateServiceTypes(SubscriptionTypeModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/servicetypes");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<SubscriptionTypeModel>("POST", path, model);
         }
 
 
@@ -8500,7 +8721,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
@@ -8509,7 +8730,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<SubscriptionModel>>("POST", path, model);
         }
 
@@ -8534,7 +8755,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8556,7 +8777,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [NotificationsAPI:Create].
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -8565,7 +8786,32 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single Subscription (ServiceTypes) object
+        /// </summary>
+        /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Marks the Subscription (ServiceTypes) object identified by this URL as deleted.
+        /// This API is useful for deleting an existing Avalara-supported subscription type (service type).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="id">The unique ID number of the Subscription object you wish to delete.</param>
+        public List<ErrorDetail> DeleteServiceType(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8581,7 +8827,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
@@ -8591,27 +8837,41 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
         /// <summary>
-        /// Retrieve List of Accounts by Account Migration Status
+        /// Retrieve the full list of Avalara-supported subscription (ServiceTypes)
         /// </summary>
         /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Returns the full list of Avalara-supported subscription types.
+        /// This API is intended to be useful for identifying which features you have added to your account.
+        /// You may always contact Avalara's sales department for information on available products or services.
+        /// You cannot change your subscriptions/service directly through the API.
+        /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="writeMode"></param>
-        public AccountMigrationStatusModel ListAccountsByTssWriteMode(TssAccountMigrationId writeMode)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<SubscriptionTypeModel> ListServiceTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/accounts/ListAccountsByTssWriteMode/{writeMode}");
-            path.ApplyField("writeMode", writeMode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
-            return RestCall<AccountMigrationStatusModel>("GET", path, null);
+            var path = new AvaTaxPath("/api/v2/servicetypes/servicetypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<SubscriptionTypeModel>>("GET", path, null);
         }
 
 
@@ -8628,19 +8888,19 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API is available to Avalara system-level (registrar-level) users only.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="userId">The unique ID of the user whose password will be changed</param>
-        /// <param name="unmigrateFromAi">If user's password was migrated to AI, undo this.</param>
+        /// <param name="isUndoMigrateRequest">If user's password was migrated to AI, undo this.</param>
         /// <param name="model">The new password for this user</param>
-        public String ResetPassword(Int32 userId, Boolean? unmigrateFromAi, SetPasswordModel model)
+        public String ResetPassword(Int32 userId, Boolean? isUndoMigrateRequest, SetPasswordModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
-            path.AddQuery("unmigrateFromAi", unmigrateFromAi);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            path.AddQuery("isUndoMigrateRequest", isUndoMigrateRequest);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallString("POST", path, model);
         }
 
@@ -8656,7 +8916,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -8665,7 +8925,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AccountModel>("PUT", path, model);
         }
 
@@ -8687,7 +8947,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [NotificationsAPI:Create].
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -8697,8 +8957,35 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NotificationModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update existing Avalara-supported subscription (ServiceTypes)
+        /// </summary>
+        /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Returns the updated Avalara-supported service types.
+        /// This API is intended to be useful for updating an existing subscription(service) type detail.
+        /// You may always contact Avalara's sales department for information on available products or services.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="id">The unique ID number of the existing subscription type object to replace.</param>
+        /// <param name="model">The subscription type object to update.</param>
+        public SubscriptionTypeModel UpdateServiceType(Int32 id, SubscriptionTypeModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<SubscriptionTypeModel>("PUT", path, model);
         }
 
 
@@ -8717,7 +9004,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that this subscription belongs to.</param>
@@ -8728,7 +9015,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<SubscriptionModel>("PUT", path, model);
         }
 
@@ -8754,7 +9041,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The unique ID number of this report</param>
@@ -8762,7 +9049,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallFile("GET", path, null);
         }
 
@@ -8789,7 +9076,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ReportModel>("GET", path, null);
         }
 
@@ -8821,7 +9108,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company to report on.</param>
@@ -8830,7 +9117,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ReportModel>>("POST", path, model);
         }
 
@@ -8853,7 +9140,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The id of the company for which to get reports.</param>
@@ -8867,7 +9154,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("pageKey", pageKey);
             path.AddQuery("$skip", skip);
             path.AddQuery("$top", top);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ReportModel>>("GET", path, null);
         }
 
@@ -8894,7 +9181,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this setting.</param>
@@ -8903,7 +9190,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<SettingModel>>("POST", path, model);
         }
 
@@ -8925,7 +9212,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this setting.</param>
@@ -8935,7 +9222,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8957,7 +9244,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this setting</param>
@@ -8967,7 +9254,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<SettingModel>("GET", path, null);
         }
 
@@ -8992,7 +9279,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these settings</param>
@@ -9010,7 +9297,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SettingModel>>("GET", path, null);
         }
 
@@ -9035,7 +9322,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* modifiedDate, ModifiedUserId</param>
@@ -9051,7 +9338,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SettingModel>>("GET", path, null);
         }
 
@@ -9077,7 +9364,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this setting belongs to.</param>
@@ -9088,7 +9375,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<SettingModel>("PUT", path, model);
         }
 
@@ -9103,7 +9390,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns this subscription</param>
@@ -9113,7 +9400,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<SubscriptionModel>("GET", path, null);
         }
 
@@ -9131,7 +9418,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The ID of the account that owns these subscriptions</param>
@@ -9147,7 +9434,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
@@ -9165,7 +9452,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* subscriptionDescription</param>
@@ -9179,7 +9466,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
@@ -9196,7 +9483,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
@@ -9205,7 +9492,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<TaxCodeModel>>("POST", path, model);
         }
 
@@ -9218,7 +9505,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
@@ -9228,7 +9515,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -9245,7 +9532,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this tax code</param>
@@ -9255,7 +9542,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxCodeModel>("GET", path, null);
         }
 
@@ -9275,7 +9562,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
@@ -9293,7 +9580,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
@@ -9313,7 +9600,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -9329,7 +9616,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
@@ -9348,7 +9635,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this tax code belongs to.</param>
@@ -9359,7 +9646,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxCodeModel>("PUT", path, model);
         }
 
@@ -9394,7 +9681,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -9402,7 +9689,7 @@ namespace Avalara.AvaTax.RestClient
         public FileResult BuildTaxContentFile(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallFile("POST", path, model);
         }
 
@@ -9437,7 +9724,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -9456,7 +9743,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallFile("GET", path, null);
         }
 
@@ -9508,7 +9795,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default). Example input: 2016-12-31</param>
@@ -9518,7 +9805,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
             path.ApplyField("date", date.ToString("o"));
             path.AddQuery("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallFile("GET", path, null);
         }
 
@@ -9533,8 +9820,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -9581,7 +9870,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxRateModel>("GET", path, null);
         }
 
@@ -9598,8 +9887,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -9629,7 +9920,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxrates/bypostalcode");
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxRateModel>("GET", path, null);
         }
 
@@ -9654,7 +9945,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
@@ -9663,7 +9954,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<TaxRuleModel>>("POST", path, model);
         }
 
@@ -9688,7 +9979,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
@@ -9698,7 +9989,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -9723,7 +10014,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this tax rule</param>
@@ -9733,7 +10024,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxRuleModel>("GET", path, null);
         }
 
@@ -9761,7 +10052,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these tax rules</param>
@@ -9779,7 +10070,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxRuleModel>>("GET", path, null);
         }
 
@@ -9807,7 +10098,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, taxTypeCode, taxRuleProductDetail, rateTypeCode, taxTypeGroup, taxSubType, unitOfBasis</param>
@@ -9823,7 +10114,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxRuleModel>>("GET", path, null);
         }
 
@@ -9848,7 +10139,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this tax rule belongs to.</param>
@@ -9859,7 +10150,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxRuleModel>("PUT", path, model);
         }
 
@@ -9891,7 +10182,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -9901,7 +10192,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/add");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -9942,7 +10233,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -9958,7 +10249,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -9993,7 +10284,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10004,7 +10295,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AuditTransactionModel>("GET", path, null);
         }
 
@@ -10039,7 +10330,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10052,7 +10343,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AuditTransactionModel>("GET", path, null);
         }
 
@@ -10079,7 +10370,7 @@ namespace Avalara.AvaTax.RestClient
         public BulkLockTransactionResult BulkLockTransaction(BulkLockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/lock");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<BulkLockTransactionResult>("POST", path, model);
         }
 
@@ -10120,7 +10411,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10136,7 +10427,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10176,7 +10467,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
@@ -10191,7 +10482,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10213,6 +10504,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
@@ -10236,7 +10529,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10246,7 +10539,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10270,6 +10563,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// The field `type` identifies the kind of transaction - for example, a sale, purchase, or refund. If you do not specify
         /// a `type` value, you will receive an estimate of type `SalesOrder`, which will not be recorded.
         ///  
@@ -10298,7 +10593,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10308,7 +10603,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10337,7 +10632,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10347,8 +10642,28 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/delete");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Fetches the Variance data generated for all the transactions done by Company.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyCode"></param>
+        public VarianceResponseModel GetAllVarianceReportByCompanyCode(String companyCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/AllVariance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<VarianceResponseModel>("GET", path, null);
         }
 
 
@@ -10385,7 +10700,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10400,7 +10715,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("GET", path, null);
         }
 
@@ -10421,7 +10736,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10436,7 +10751,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("GET", path, null);
         }
 
@@ -10447,8 +10762,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Get the unique transaction identified by this URL.
         ///  
-        /// This endpoint retrieves the exact transaction identified by this ID number even if that transaction was later adjusted
-        /// by using the `AdjustTransaction` endpoint.
+        /// This endpoint retrieves the exact transaction identified by this ID number, as long as it is the most version of the transaction.
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
@@ -10465,7 +10779,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10476,8 +10790,30 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Fetches the Variance data generated for particular Company by transaction ID
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyCode"></param>
+        /// <param name="transactionId"></param>
+        public VarianceResponseModel GetVarianceReportByCompanyCodeByTransactionId(String companyCode, String transactionId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionId}/variance");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionId", transactionId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<VarianceResponseModel>("GET", path, null);
         }
 
 
@@ -10517,7 +10853,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10538,7 +10874,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TransactionModel>>("GET", path, null);
         }
 
@@ -10552,7 +10888,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is mainly used for connector developers to simulate what happens when the Returns product locks a document.
         /// After this API call succeeds, the document will be locked and can't be voided or adjusted.
         ///  
-        /// This API is only available to customers in Sandbox with AvaTaxPro subscription. On production servers, this API is available by invitation only.
+        /// On Sandbox, this API is only available to customers who have both an AvaTaxPro and a Managed Returns subscription. On Production, this API is only available internally for the Avalara Returns team.
         ///  
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
@@ -10579,7 +10915,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10595,7 +10931,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10646,7 +10982,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10664,7 +11000,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
             path.AddQuery("useTaxDateOverride", useTaxDateOverride);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10704,7 +11040,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
@@ -10719,7 +11055,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10753,7 +11089,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10768,7 +11104,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, null);
         }
 
@@ -10799,7 +11135,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10814,8 +11150,29 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, null);
+        }
+
+
+        /// <summary>
+        /// Generates the Variance report which will capture the difference between "Tax Calculated by Avalara" Vs "Actual Tax" paid at custom clearance at line / header level.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyCode"></param>
+        /// <param name="model"></param>
+        public VarianceResponseModel VarianceReport(String companyCode, List<VarianceRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/variance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<VarianceResponseModel>("POST", path, model);
         }
 
 
@@ -10852,7 +11209,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10868,7 +11225,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10908,7 +11265,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10924,7 +11281,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10938,7 +11295,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10948,7 +11305,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<UPCModel>>("POST", path, model);
         }
 
@@ -10961,7 +11318,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10972,7 +11329,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -10986,7 +11343,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -10997,7 +11354,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<UPCModel>("GET", path, null);
         }
 
@@ -11014,7 +11371,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -11033,7 +11390,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<UPCModel>>("GET", path, null);
         }
 
@@ -11050,7 +11407,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -11067,7 +11424,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<UPCModel>>("GET", path, null);
         }
 
@@ -11083,7 +11440,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -11095,7 +11452,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<UPCModel>("PUT", path, model);
         }
 
@@ -11108,7 +11465,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -11119,7 +11476,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -11130,7 +11487,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -11143,7 +11500,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.AddQuery("udfType", udfType);
             path.AddQuery("allowDefaults", allowDefaults);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<CompanyUserDefinedFieldModel>>("GET", path, null);
         }
 
@@ -11156,7 +11513,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -11168,7 +11525,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields");
             path.ApplyField("companyId", companyId);
             path.AddQuery("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CompanyUserDefinedFieldModel>("POST", path, model);
         }
 
@@ -11187,14 +11544,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="model">An object containing your current password and the new password.</param>
         public String ChangePassword(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallString("PUT", path, model);
         }
 
@@ -11215,7 +11572,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The unique ID number of the account where these users will be created.</param>
@@ -11224,7 +11581,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<UserModel>>("POST", path, model);
         }
 
@@ -11242,7 +11599,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user you wish to delete.</param>
@@ -11252,7 +11609,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -11270,7 +11627,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -11282,7 +11639,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<UserModel>("GET", path, null);
         }
 
@@ -11309,7 +11666,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -11319,7 +11676,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}/entitlements");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<UserEntitlementModel>("GET", path, null);
         }
 
@@ -11343,7 +11700,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The accountID of the user you wish to list.</param>
@@ -11361,7 +11718,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<UserModel>>("GET", path, null);
         }
 
@@ -11387,7 +11744,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="include">Optional fetch commands.</param>
@@ -11403,7 +11760,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<UserModel>>("GET", path, null);
         }
 
@@ -11419,7 +11776,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user you wish to update.</param>
@@ -11430,7 +11787,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<UserModel>("PUT", path, model);
         }
 
@@ -11454,7 +11811,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions/{serviceTypeId}");
             path.ApplyField("serviceTypeId", serviceTypeId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<SubscriptionModel>("GET", path, null);
         }
 
@@ -11476,7 +11833,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<SubscriptionModel> ListMySubscriptions()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
@@ -11510,8 +11867,89 @@ namespace Avalara.AvaTax.RestClient
         public PingResultModel Ping()
         {
             var path = new AvaTaxPath("/api/v2/utilities/ping");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<PingResultModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Fetches a previously stored age verification response.
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public AgeVerifyResult findAgeVerification(AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/find");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<AgeVerifyResult>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Stores an age verification response for the account.
+        /// </summary>
+        /// <remarks>
+        /// The request field must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, request field may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// 
+        /// 
+        /// The response field must meet the following criteria in order to be evaluated:
+        /// * *isOfAge*, *failureCodes* are required fields
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="model">Information about the individual whose age has been verified and the corresponding age verification response.</param>
+        public void storeAgeVerification(StoreAgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Conditionally performs an age verification check. If a record matching the request is found in the internal store, the associated response is returned. Otherwise, an age verification check is performed and the response is stored if the individual is determined to be of age.
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="simulatedFailureCode">(Optional) The failure code included in the simulated response of the endpoint. Note that this endpoint is only available in Sandbox for testing purposes.</param>
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public StoreIfVerifiedResult storeIfVerified(String simulatedFailureCode, AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/storeIfVerified");
+            path.AddQuery("simulatedFailureCode", simulatedFailureCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<StoreIfVerifiedResult>("PUT", path, model);
         }
 
 
@@ -11540,7 +11978,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/ageverification/verify");
             path.AddQuery("simulatedFailureCode", simulatedFailureCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AgeVerifyResult>("POST", path, model);
         }
 
@@ -11555,13 +11993,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public void deregisterShipment(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public void deregisterShipment(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/registration");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             RestCallString("DELETE", path, null);
         }
 
@@ -11576,13 +12022,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public void registerShipment(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public void registerShipment(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/registration");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             RestCallString("PUT", path, null);
         }
 
@@ -11597,13 +12051,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public ShippingVerifyResult registerShipmentIfCompliant(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public ShippingVerifyResult registerShipmentIfCompliant(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/registerIfCompliant");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ShippingVerifyResult>("PUT", path, null);
         }
 
@@ -11618,13 +12080,13 @@ namespace Avalara.AvaTax.RestClient
         /// * A parameter with the name *RecipientName* must be specified and the value must be the name of the recipient.
         /// * Each alcohol line must include a *ContainerSize* parameter that describes the volume of a single container. Use the *unit* field to specify one of the following units: '*Litre*', '*Millilitre*', '*gallon (US fluid)*', '*quart (US fluid)*', '*ounce (fluid US customary)*'
         /// * Each alcohol line must include a *PackSize* parameter that describes the number of containers in a pack. Specify *Count* in the *unit* field.
+        /// * Each alcohol line must include a *AlcoholContent* parameter that describes the alcohol percentage by volume of the item. Specify *Percentage* in the *unit* field. If unable to provide this parameter, use version 2.1 of the API.
         /// 
         /// Optionally, the transaction and its lines may use the following parameters:
         /// * The *ShipDate* parameter may be used if the date of shipment is different than the date of the transaction. The value should be ISO-8601 compliant (e.g. 2020-07-21).
         /// * The *RecipientDOB* parameter may be used to evaluate age restrictions. The value should be ISO-8601 compliant (e.g. 2020-07-21).
         /// * The *PurchaserDOB* parameter may be used to evaluate age restrictions. The value should be ISO-8601 compliant (e.g. 2020-07-21).
         /// * The *SalesLocation* parameter may be used to describe whether the sale was made *OnSite* or *OffSite*. *OffSite* is the default value.
-        /// * The *AlcoholContent* parameter may be used to describe the alcohol percentage by volume of the item. Specify *Percentage* in the *unit* field.
         /// 
         /// **Security Policies**
         /// This API depends on all of the following active subscriptions: *AvaAlcohol, AutoAddress, AvaTaxPro*
@@ -11633,13 +12095,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public ShippingVerifyResult verifyShipment(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public ShippingVerifyResult verifyShipment(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/verify");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ShippingVerifyResult>("GET", path, null);
         }
 
@@ -11661,7 +12131,7 @@ namespace Avalara.AvaTax.RestClient
         /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
         /// please log onto the AvaTax website or call the `ActivateAccount` API.
         ///  
-        /// You can only reset license with 'Default' license key name. 
+        /// You can only reset license with 'Default' license key name.
         /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
         ///  
         /// When you call this API, all account administrators for this account will receive an email with the newly updated license key.
@@ -11670,7 +12140,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -11679,7 +12149,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<LicenseKeyModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -11702,7 +12172,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account to activate</param>
@@ -11711,7 +12181,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -11738,7 +12208,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account you wish to audit.</param>
@@ -11754,7 +12224,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("end", end);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<AuditModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -11777,7 +12247,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -11786,7 +12256,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<LicenseKeyModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -11804,7 +12274,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -11814,7 +12284,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -11832,7 +12302,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account to retrieve</param>
@@ -11842,7 +12312,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AccountModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -11867,7 +12337,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -11875,7 +12345,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<AccountConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -11887,7 +12357,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account to retrieve</param>
@@ -11897,7 +12367,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AccountLicenseKeyModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -11911,7 +12381,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account to retrieve</param>
@@ -11919,7 +12389,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekeys");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<AccountLicenseKeyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -11944,7 +12414,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
@@ -11960,7 +12430,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<AccountModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -11985,7 +12455,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -11994,7 +12464,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<AccountConfigurationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12018,7 +12488,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AutoAddress.;
         /// </remarks>
 		
@@ -12041,7 +12511,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
             path.AddQuery("textCase", textCase);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AddressResolutionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12060,7 +12530,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AutoAddress.;
         /// </remarks>
 		
@@ -12068,7 +12538,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<AddressResolutionModel> ResolveAddressPostAsync(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AddressResolutionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12089,7 +12559,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AdvancedRuleLookupFileModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12109,7 +12579,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12129,7 +12599,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<AdvancedRuleLookupFileModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12149,7 +12619,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AdvancedRuleLookupFileModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12170,7 +12640,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AdvancedRuleLookupFileModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -12193,7 +12663,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<AvaFileFormModel>> CreateAvaFileFormsAsync(List<AvaFileFormModel> model)
         {
             var path = new AvaTaxPath("/api/v2/avafileforms");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<AvaFileFormModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12216,7 +12686,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12230,7 +12700,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
@@ -12239,7 +12709,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AvaFileFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12254,7 +12724,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
@@ -12269,7 +12739,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<AvaFileFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12294,7 +12764,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AvaFileFormModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -12319,7 +12789,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -12329,7 +12799,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}/cancel");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<BatchModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -12361,7 +12831,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -12370,7 +12840,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<BatchModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12400,7 +12870,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -12409,7 +12879,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/transactions");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CreateTransactionBatchResponseModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12432,7 +12902,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: CSPAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, CSPAdmin, CSPTester, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this batch.</param>
@@ -12442,7 +12912,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12456,7 +12926,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this batch</param>
@@ -12468,8 +12938,8 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12496,7 +12966,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this batch</param>
@@ -12506,7 +12976,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<BatchModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12540,7 +13010,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these batches</param>
@@ -12558,7 +13028,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<BatchModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12589,7 +13059,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* files</param>
@@ -12605,7 +13075,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<BatchModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12627,13 +13097,13 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12645,7 +13115,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CertExpressInvitationStatusModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12667,13 +13137,13 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12688,7 +13158,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CertExpressInvitationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12710,13 +13180,13 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12737,7 +13207,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertExpressInvitationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12771,7 +13241,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12783,7 +13253,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
             path.AddQuery("$preValidatedExemptionReason", preValidatedExemptionReason);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12809,7 +13279,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12820,7 +13290,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12847,7 +13317,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12862,8 +13332,8 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$page", page);
             path.AddQuery("$type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12892,7 +13362,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12909,7 +13379,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CertificateModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12929,7 +13399,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12938,7 +13408,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ProvisionStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12965,7 +13435,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -12977,7 +13447,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13005,7 +13475,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13017,7 +13487,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13044,7 +13514,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13055,7 +13525,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13082,7 +13552,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13096,7 +13566,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CustomerModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13126,7 +13596,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13149,7 +13619,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13171,7 +13641,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13180,7 +13650,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ProvisionStatusModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -13207,7 +13677,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13219,7 +13689,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13248,7 +13718,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13260,7 +13730,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13284,7 +13754,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13296,7 +13766,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CertificateModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -13323,7 +13793,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -13335,7 +13805,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallStringAsync("POST", path, file).ConfigureAwait(false);
         }
 
@@ -13371,7 +13841,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the company to check if its integration is certified.</param>
@@ -13379,7 +13849,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/certify");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallStringAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13405,7 +13875,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -13414,7 +13884,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13439,14 +13909,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="model">Information about the company you wish to create.</param>
         public async Task<CompanyModel> CompanyInitializeAsync(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13464,14 +13934,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="model">Either a single company object or an array of companies to create</param>
         public async Task<List<CompanyModel>> CreateCompaniesAsync(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CompanyModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13495,7 +13965,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this company parameter.</param>
@@ -13504,7 +13974,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CompanyParameterDetailModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13528,16 +13998,20 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The unique identifier of the company</param>
+        /// <param name="businessUnit">The company's business unit</param>
+        /// <param name="subscriptionType">The company's subscription type</param>
         /// <param name="model">The funding initialization request</param>
-        public async Task<FundingStatusModel> CreateFundingRequestAsync(Int32 id, FundingInitiateModel model)
+        public async Task<FundingStatusModel> CreateFundingRequestAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType, FundingInitiateModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding/setup");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            path.AddQuery("businessUnit", businessUnit);
+            path.AddQuery("subscriptionType", subscriptionType);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FundingStatusModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13551,7 +14025,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the company you wish to delete.</param>
@@ -13559,7 +14033,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -13578,7 +14052,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -13588,7 +14062,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -13605,7 +14079,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
@@ -13614,7 +14088,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FundingConfigurationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13631,7 +14105,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
@@ -13642,7 +14116,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
             path.ApplyField("companyId", companyId);
             path.AddQuery("currency", currency);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<FundingConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13668,7 +14142,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the company to retrieve.</param>
@@ -13681,7 +14155,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13706,7 +14180,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -13714,7 +14188,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CompanyConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13734,7 +14208,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId"></param>
@@ -13744,7 +14218,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyParameterDetailModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13771,7 +14245,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -13779,8 +14253,38 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallStringAsync("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Get ACH entry detail report for company and period;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        /// Returns a list of ACH entry details for the given company and period.
+        /// Each object in the result is an ach entry trace record for a payment made on behalf of this company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        /// <param name="id">The unique identifier of the company</param>
+        /// <param name="periodyear">The period year</param>
+        /// <param name="periodmonth">The period month</param>
+        public async Task<List<ACHEntryDetailModel>> ListACHEntryDetailsForCompanyAsync(Int32 id, Int32 periodyear, Int32 periodmonth)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{id}/paymentdetails/{periodyear}/{periodmonth}");
+            path.ApplyField("id", id);
+            path.ApplyField("periodyear", periodyear);
+            path.ApplyField("periodmonth", periodmonth);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ACHEntryDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13802,7 +14306,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -13818,7 +14322,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CompanyParameterDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13836,7 +14340,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The unique identifier of the company</param>
@@ -13844,7 +14348,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<FundingStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13860,13 +14364,13 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         public async Task<FetchResult<MrsCompanyModel>> ListMrsCompaniesAsync()
         {
             var path = new AvaTaxPath("/api/v2/companies/mrs");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<MrsCompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13896,7 +14400,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
@@ -13912,7 +14416,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13937,7 +14441,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -13946,7 +14450,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CompanyConfigurationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13970,7 +14474,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the company you wish to update.</param>
@@ -13979,7 +14483,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -13999,7 +14503,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -14010,44 +14514,8 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyParameterDetailModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Retrieve jurisdiction rate information for tax authority;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
-        /// </remarks>
-		
-        /// <param name="taxAuthorityId">Used to limit the jurisdictions returned.</param>
-        /// <param name="effectiveDate">Used to limit the jurisdictions returned.</param>
-        /// <param name="endDate">Used to limit the jurisdictions returned.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="include">A comma separated list of objects to fetch underneath this jurisdiction.</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<ComplianceJurisdictionRateModel> QueryTaxAuthorityJurisdictionRatesAsync(Int32? taxAuthorityId, DateTime? effectiveDate, DateTime? endDate, String filter, String include, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/compliance/taxauthorityjurisdictionrates");
-            path.AddQuery("taxAuthorityId", taxAuthorityId);
-            path.AddQuery("effectiveDate", effectiveDate);
-            path.AddQuery("endDate", endDate);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<ComplianceJurisdictionRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14062,7 +14530,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this contact.</param>
@@ -14071,7 +14539,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ContactModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14085,7 +14553,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this contact.</param>
@@ -14095,7 +14563,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -14111,7 +14579,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company for this contact</param>
@@ -14121,7 +14589,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ContactModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14138,7 +14606,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these contacts</param>
@@ -14154,7 +14622,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ContactModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14173,7 +14641,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -14187,7 +14655,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ContactModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14205,7 +14673,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that this contact belongs to.</param>
@@ -14216,7 +14684,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ContactModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14244,7 +14712,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14254,7 +14722,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14279,7 +14747,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14290,7 +14758,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CustomerModel>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -14321,7 +14789,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14334,7 +14802,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CustomerModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14362,7 +14830,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14374,7 +14842,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CustomerAttributeModel>>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14399,7 +14867,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14411,7 +14879,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14437,7 +14905,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14449,7 +14917,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/billto/{code}/shipto/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("code", code);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CustomerModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14477,7 +14945,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14488,7 +14956,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CustomerAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14513,7 +14981,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14538,7 +15006,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14566,7 +15034,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14581,7 +15049,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ExemptionStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14611,7 +15079,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14630,7 +15098,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CustomerModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14658,7 +15126,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14670,7 +15138,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CustomerAttributeModel>>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14695,7 +15163,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14707,7 +15175,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14732,7 +15200,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -14744,7 +15212,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CustomerModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14758,7 +15226,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -14768,7 +15236,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<DataSourceModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14782,7 +15250,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -14793,7 +15261,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -14807,7 +15275,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -14818,7 +15286,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<DataSourceModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14832,7 +15300,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -14849,7 +15317,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<DataSourceModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14866,7 +15334,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -14881,7 +15349,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<DataSourceModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14895,7 +15363,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -14907,7 +15375,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<DataSourceModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14940,7 +15408,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14967,7 +15435,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14991,7 +15459,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<MarketplaceModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15020,7 +15488,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<AvaFileFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15052,7 +15520,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15082,7 +15550,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ExemptionReasonModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15112,7 +15580,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ExposureZoneModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15138,7 +15606,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ClassificationParameterUsageMapModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15164,7 +15632,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15189,7 +15657,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CommunicationsTransactionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15214,7 +15682,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15240,7 +15708,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<IsoCountryModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15271,7 +15739,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CoverLetterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15310,7 +15778,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15335,7 +15803,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<HsCodeModel>> ListCrossBorderSectionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15362,7 +15830,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CurrencyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15390,7 +15858,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<EntityUseCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15415,7 +15883,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<FilingFrequencyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15433,7 +15901,7 @@ namespace Avalara.AvaTax.RestClient
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -15444,7 +15912,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15488,17 +15956,19 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// List jurisdictions based on the TaxType, TaxSubType and RateType provided;
+        /// List jurisdictions based on the provided taxTypeId, taxSubTypeId, country, and rateTypeId;
         /// </summary>
         /// <remarks>
-        /// Returns a list of all Avalara-supported taxing jurisdictions filtered by TaxType, TaxSubType and RateType.
+        /// Returns a list of all Avalara-supported taxing jurisdictions filtered by taxTypeId, taxSubTypeId, country, and rateTypeId.
+        ///  
+        /// You can optionally pass region as a query parameter to retrieve jurisdictions that are under that region.
         ///  
         /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
         /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate > '2016-01-01'
@@ -15507,28 +15977,52 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="country">The country for which you want to retrieve the jurisdiction information</param>
-        /// <param name="region">The region for which you want to retrieve the jurisdiction information</param>
         /// <param name="taxTypeId">The taxtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="rateTypeId">The ratetype for which you want to retrieve the jurisdiction information</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, country, state, jurisdictionCode, longName, taxTypeId, taxSubTypeId, taxTypeGroupId, rateTypeId</param>
+        /// <param name="region">The region for which you want to retrieve the jurisdiction information</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, country, state, jurisdictionCode, longName, taxTypeId, taxSubTypeId, taxTypeGroupId, rateTypeId, stateFips</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>> ListJurisdictionsByRateTypeTaxTypeMappingAsync(String country, String region, String taxTypeId, String taxSubTypeId, String rateTypeId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>> ListJurisdictionsByRateTypeTaxTypeMappingAsync(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/countries/{country}/regions/{region}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
             path.ApplyField("country", country);
-            path.ApplyField("region", region);
             path.ApplyField("taxTypeId", taxTypeId);
             path.ApplyField("taxSubTypeId", taxSubTypeId);
             path.AddQuery("rateTypeId", rateTypeId);
+            path.AddQuery("region", region);
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List jurisdiction types based on the provided taxTypeId, taxSubTypeId, country, and rateTypeId;
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all applicable jurisdiction types based on country, taxTypeId, taxSubTypeId, and rateTypeId;
+        /// </remarks>
+		
+        /// <param name="country">The country for which you want to retrieve the jurisdiction information</param>
+        /// <param name="taxTypeId">The taxtype for which you want to retrieve the jurisdiction information</param>
+        /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the jurisdiction information</param>
+        /// <param name="rateTypeId">The ratetype for which you want to retrieve the jurisdiction information</param>
+        public async Task<List<String>> ListJurisdictionTypesByRateTypeTaxTypeMappingAsync(String country, String taxTypeId, String taxSubTypeId, String rateTypeId)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictionTypes/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
+            path.ApplyField("country", country);
+            path.ApplyField("taxTypeId", taxTypeId);
+            path.ApplyField("taxSubTypeId", taxSubTypeId);
+            path.AddQuery("rateTypeId", rateTypeId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<String>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15574,7 +16068,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<LocationQuestionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15600,7 +16094,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15624,7 +16118,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<MarketplaceLocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15650,7 +16144,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15707,7 +16201,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15735,7 +16229,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15765,7 +16259,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15789,7 +16283,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="formCode">The form code that we are looking up the nexus for</param>
@@ -15797,7 +16291,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
             path.ApplyField("formCode", formCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NexusByTaxFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15825,7 +16319,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15850,7 +16344,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusTaxTypeGroupModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15875,7 +16369,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeCustomerFundingOptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15900,7 +16394,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeCustomerTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15925,7 +16419,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeFilingTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15950,7 +16444,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticePriorityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15975,7 +16469,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeReasonModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16000,7 +16494,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeResponsibilityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16025,7 +16519,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeRootCauseModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16039,7 +16533,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify all the different tax notice statuses.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder, activeFlag</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -16050,7 +16544,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16075,7 +16569,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NoticeTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16101,7 +16595,33 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve the list of Avalara-supported parameters based on account subscriptions.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of Avalara-supported parameters based on account subscriptions.;
+        /// </remarks>
+		
+        /// <param name="accountId">The ID of the account to retrieve the parameters.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* serviceTypes, regularExpression, values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ParameterModel>> ListParametersByAccountAsync(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/accounts/{accountId}/parameters");
+            path.ApplyField("accountId", accountId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16121,10 +16641,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '?' with '\_-ava3f-\_' For example: 'Company?Code' becomes 'Company_-ava3f-_Code'
         /// * Replace '%' with '\_-ava25-\_' For example: 'Company%Code' becomes 'Company_-ava25-_Code'
         /// * Replace '#' with '\_-ava23-\_' For example: 'Company#Code' becomes 'Company_-ava23-_Code'
+        ///  
+        /// For Item Code other than the five given above below two should also be used
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyCode">Company code.</param>
@@ -16142,7 +16666,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16168,7 +16692,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ParameterUsageModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16189,7 +16713,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<String>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16206,14 +16730,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<PostalCodeModel>> ListPostalCodesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeExpiredPostalCodes">If set to true, returns expired postal codes. Defaults to false</param>
+        public async Task<FetchResult<PostalCodeModel>> ListPostalCodesAsync(String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeExpiredPostalCodes)
         {
             var path = new AvaTaxPath("/api/v2/definitions/postalcodes");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            path.AddQuery("includeExpiredPostalCodes", includeExpiredPostalCodes);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<PostalCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16245,7 +16771,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<PreferredProgramModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16274,7 +16800,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16313,7 +16839,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16340,7 +16866,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<RateTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16371,7 +16897,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<RateTypesModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16397,7 +16923,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16425,7 +16951,45 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve the list of applicable regions by country tax type, tax sub type, and rate type for a given JurisdictionTypeId;
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all ISO 3166 region codes for a specific country code and their US English friendly names.
+        /// This API is intended to be used as a way to provide a dropdown box in your website to allow customers to select a region
+        /// within the country for shipping addresses.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company for which you want to retrieve the applicable regions</param>
+        /// <param name="country">The country for which you want to retrieve the regions</param>
+        /// <param name="taxTypeId">The taxTypeId for which you want to retrieve the regions. Example values include Autimotive, tires, Lodging, S, U, I, O, All, etc. Run the "/api/v2/definitions/taxtypes/countries/{country}?companyId=" endpoint for a list of taxTypeId values.</param>
+        /// <param name="taxSubTypeId">The taxSubType for which you want to retrieve the regions. Example values include Accommodations, BikeTax, IGST, S, U, All, etc. Run the "api/v2/definitions/taxsubtypes" endpoint for a list of taxSubTypes values.</param>
+        /// <param name="rateTypeId">The rateTypeId for which you want to retrieve the regions.
+        ///  Note: The rateTypeId is an integer. Run the "/api/v2/definitions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/ratetypes" endpoint for a list of rateTypeId values."</param>
+        /// <param name="jurisdictionTypeId">The JurisdictionTypeId for which you want to retrieve the regions.
+        ///  This is a three-character string. Accepted values are ```CNT``` (country), ```STA``` (state), ```CTY``` (county), ```CIT``` (city), or ```STJ``` (special jurisdiction).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<IsoRegionModel>> ListRegionsByCountryAndTaxTypeAndTaxSubTypeAndRateTypeAsync(Int32 companyId, String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String jurisdictionTypeId, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/companies/{companyId}/countries/{country}/regions/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/rateTypeId/{rateTypeId}/jurisdictionTypeId/{jurisdictionTypeId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("country", country);
+            path.ApplyField("taxTypeId", taxTypeId);
+            path.ApplyField("taxSubTypeId", taxSubTypeId);
+            path.ApplyField("rateTypeId", rateTypeId);
+            path.ApplyField("jurisdictionTypeId", jurisdictionTypeId);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16450,7 +17014,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ResourceFileTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16476,7 +17040,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ReturnsParameterUsageModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16502,7 +17066,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SecurityRoleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16518,7 +17082,7 @@ namespace Avalara.AvaTax.RestClient
         /// You cannot change your subscriptions directly through the API.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -16529,7 +17093,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16553,7 +17117,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TagsModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16578,7 +17142,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxAuthorityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16605,7 +17169,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxAuthorityFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16630,7 +17194,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxAuthorityTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16648,7 +17212,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -16662,7 +17226,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16684,7 +17248,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/taxcodetypes");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxCodeTypesModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16709,7 +17273,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<FormMasterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16734,7 +17298,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16750,20 +17314,22 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="country">The country to examine for taxsubtype</param>
         /// <param name="taxTypeId">The taxType for the country to examine for taxsubtype</param>
+        /// <param name="companyId">Id of the company the user wish to fetch the applicable tax sub types</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<TaxSubTypeModel>> ListTaxSubTypesByCountryAndTaxTypeAsync(String country, String taxTypeId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<TaxSubTypeModel>> ListTaxSubTypesByCountryAndTaxTypeAsync(String country, String taxTypeId, Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxsubtypes/countries/{country}/taxtypes/{taxTypeId}");
             path.ApplyField("country", country);
             path.ApplyField("taxTypeId", taxTypeId);
+            path.AddQuery("companyId", companyId);
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16792,7 +17358,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16817,7 +17383,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxTypeGroupModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16843,7 +17409,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16873,7 +17439,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<UnitOfBasisModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16899,7 +17465,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<UomModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16917,7 +17483,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
@@ -16926,7 +17492,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<CompanyDistanceThresholdModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -16944,7 +17510,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
@@ -16954,7 +17520,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -16972,7 +17538,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this DistanceThreshold object</param>
@@ -16982,7 +17548,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyDistanceThresholdModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17000,7 +17566,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company whose DistanceThreshold objects you wish to list.</param>
@@ -17018,7 +17584,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17039,7 +17605,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -17055,7 +17621,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17076,7 +17642,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold object.</param>
@@ -17087,7 +17653,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyDistanceThresholdModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -17103,7 +17669,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company ID that will be issued this certificate.</param>
@@ -17112,7 +17678,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ECommerceTokenOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17128,7 +17694,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company ID that the refreshed certificate belongs to.</param>
@@ -17137,158 +17703,8 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ECommerceTokenOutputModel>>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Add or Edit options;
-        /// </summary>
-        /// <remarks>
-        /// Returns a list of options for adding tax forms for the company and tax form code specified.
-        /// Returns edit options when modifying a filing calendar.
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
-        /// </remarks>
-		
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="model">Cycle Safe Options Request</param>
-        public async Task<CycleSafeOptionResultModel> CycleSafeOptionsAsync(Int32 companyId, CycleSafeEditRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/edit/cycleSafeOptions");
-            path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<CycleSafeOptionResultModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Delete a company return setting;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only and only available for users with Compliance access
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
-        /// </remarks>
-		
-        /// <param name="companyId">The unique ID of the company</param>
-        /// <param name="filingCalendarId">The unique ID of the filing calendar that will remove setting</param>
-        /// <param name="companyReturnSettingId">The unique ID of the company return setting that will be deleted from the filing calendar</param>
-        public async Task<List<CompanyReturnSettingModel>> DeleteCompanyReturnSettingsAsync(Int32 companyId, Int32 filingCalendarId, Int64 companyReturnSettingId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{filingCalendarId}/setting/{companyReturnSettingId}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingCalendarId", filingCalendarId);
-            path.ApplyField("companyReturnSettingId", companyReturnSettingId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<List<CompanyReturnSettingModel>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Retrieve all legacy filing calendars for this company;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
-        /// </remarks>
-		
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypes, taxAuthorityId, taxAuthorityName, taxAuthorityType, settings</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry">A comma separated list of countries</param>
-        /// <param name="returnRegion">A comma separated list of regions</param>
-        public async Task<FetchResult<FilingCalendarModel>> LegacyFilingCalendarsAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/Legacy");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FetchResult<FilingCalendarModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Retrieve a filing containing the return and all its accrual returns.;
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
-        /// </remarks>
-		
-        /// <param name="companyId">The ID of the company that owns these returns</param>
-        /// <param name="filingReturnId">The ID of the filing return</param>
-        public async Task<FetchResult<MultiTaxFilingModel>> GetAccrualFilingsAsync(Int32 companyId, Int64 filingReturnId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/accrual/{filingReturnId}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingReturnId", filingReturnId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FetchResult<MultiTaxFilingModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Retrieve a list of filed returns for the specified company in the year and month of a given filing period.;
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires openId bearer token for authentication
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only.*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser, CompanyUser, AccountUser, CompanyAdmin, AccountAdmin.
-        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
-        /// </remarks>
-		
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="endPeriodMonth">The month of the period you are trying to retrieve</param>
-        /// <param name="endPeriodYear">The year of the period you are trying to retrieve</param>
-        /// <param name="frequency">The frequency of the return you are trying to retrieve</param>
-        /// <param name="status">The status of the return(s) you are trying to retrieve</param>
-        /// <param name="country">The country of the return(s) you are trying to retrieve</param>
-        /// <param name="region">The region of the return(s) you are trying to retrieve</param>
-        /// <param name="filingCalendarId">The filing calendar id of the return you are trying to retrieve</param>
-        /// <param name="taxformCode">The unique tax form code of the form.</param>
-        public async Task<FetchResult<FiledReturnModel>> GetFiledReturnsAsync(Int32 companyId, Int32? endPeriodMonth, Int32? endPeriodYear, FilingFrequencyId? frequency, FilingStatusId? status, String country, String region, Int64? filingCalendarId, String taxformCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/filed");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("endPeriodMonth", endPeriodMonth);
-            path.AddQuery("endPeriodYear", endPeriodYear);
-            path.AddQuery("frequency", frequency);
-            path.AddQuery("status", status);
-            path.AddQuery("country", country);
-            path.AddQuery("region", region);
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            path.AddQuery("taxformCode", taxformCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FetchResult<FiledReturnModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -17301,7 +17717,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -17309,7 +17725,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/approve");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17339,7 +17755,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FirmClientLinkageOutputModel> CreateAndLinkNewFirmClientAccountAsync(NewFirmClientAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/createandlinkclient");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17353,14 +17769,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="model">FirmClientLinkageInputModel</param>
         public async Task<FirmClientLinkageOutputModel> CreateFirmClientLinkageAsync(FirmClientLinkageInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17374,7 +17790,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -17382,7 +17798,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17396,7 +17812,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -17404,7 +17820,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17418,7 +17834,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* firmAccountName, clientAccountName</param>
@@ -17426,7 +17842,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
             path.AddQuery("$filter", filter);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<FirmClientLinkageOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17440,7 +17856,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -17448,7 +17864,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reject");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17462,7 +17878,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -17470,7 +17886,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reset");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17484,7 +17900,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id"></param>
@@ -17492,7 +17908,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/revoke");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17522,7 +17938,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NewAccountModel> RequestFreeTrialAsync(FreeTrialRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17547,16 +17963,20 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
         /// <param name="id">The unique ID number of this funding request</param>
-        public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int64 id)
+        /// <param name="businessUnit">The company's business unit</param>
+        /// <param name="subscriptionType">The company's subscription type</param>
+        public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int64 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            path.AddQuery("businessUnit", businessUnit);
+            path.AddQuery("subscriptionType", subscriptionType);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17579,16 +17999,20 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
         /// <param name="id">The unique ID number of this funding request</param>
-        public async Task<FundingStatusModel> FundingRequestStatusAsync(Int32 id)
+        /// <param name="businessUnit">The company's business unit</param>
+        /// <param name="subscriptionType">The company's subscription type</param>
+        public async Task<FundingStatusModel> FundingRequestStatusAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            path.AddQuery("businessUnit", businessUnit);
+            path.AddQuery("subscriptionType", subscriptionType);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17606,7 +18030,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -17616,7 +18040,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17636,7 +18060,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -17646,7 +18070,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17668,7 +18092,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this items.</param>
@@ -17677,7 +18101,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/upload");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemBulkUploadOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17697,7 +18121,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -17708,7 +18132,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ItemClassificationOutputModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17732,7 +18156,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item parameter.</param>
@@ -17743,7 +18167,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ItemParameterModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17765,7 +18189,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -17774,7 +18198,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ItemModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17790,19 +18214,84 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="model">Tags you wish to associate with the Item</param>
-        public async Task<List<ItemTagDetailModel>> CreateItemTagsAsync(Int32 companyId, Int32 itemId, List<ItemTagDetailModel> model)
+        public async Task<List<ItemTagDetailOutputModel>> CreateItemTagsAsync(Int32 companyId, Int32 itemId, List<ItemTagDetailInputModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<List<ItemTagDetailModel>>("POST", path, model).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ItemTagDetailOutputModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create a new tax code classification request;
+        /// </summary>
+        /// <remarks>
+        /// Creates a new tax code classification request.
+        ///  
+        /// Avalara AvaTax system tax codes represent various goods and services classified by industry or consumer categories and
+        /// major physical similarities. Taxability rules are associated with tax codes. Customers can map their Items to tax codes
+        /// allowing them to take advantage of thousands of tax rules in the AvaTax engine resulting in accurate taxability determinations.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that creates this request.</param>
+        /// <param name="model">The request you wish to create.</param>
+        public async Task<ItemTaxCodeClassificationRequestOutputModel> CreateTaxCodeClassificationRequestAsync(Int32 companyId, ItemTaxCodeClassificationRequestInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemTaxCodeClassificationRequestOutputModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a single item;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the item object at this URL.
+        ///  
+        /// Items are a way of separating your tax calculation process from your tax configuration details.
+        /// Use this endpoint to delete an existing item with item code.
+        ///  
+        /// Deleting an item will also delete the parameters, classifications, and product categories associated with that item.
+        ///  
+        /// NOTE: If your item code contains any of these characters /, +, ? or a space, please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: 'Item/Code' becomes 'Item_-ava2f-_Code'
+        /// * Replace '+' with '\_-ava2b-\_' For example: 'Item+Code' becomes 'Item_-ava2b-_Code'
+        /// * Replace '?' with '\_-ava3f-\_' For example: 'Item?Code' becomes 'Item_-ava3f-_Code'
+        /// * Replace '%' with '\_-ava25-\_' For example: 'Item%Code' becomes 'Item_-ava25-_Code'
+        /// * Replace '#' with '\_-ava23-\_' For example: 'Item#Code' becomes 'Item_-ava23-_Code'
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this item.</param>
+        /// <param name="itemCode">The code of the item you want to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteCatalogueItemAsync(Int32 companyId, String itemCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue/{itemCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemCode", itemCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -17823,7 +18312,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -17833,7 +18322,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17851,7 +18340,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -17863,7 +18352,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17883,7 +18372,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -17895,7 +18384,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17911,7 +18400,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -17923,7 +18412,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("itemTagDetailId", itemTagDetailId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17939,7 +18428,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
@@ -17949,8 +18438,46 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Get status of classification requests of a company;
+        /// </summary>
+        /// <remarks>
+        /// Get status of tax code classification requests of a company.
+        ///  
+        /// Avalara AvaTax system tax codes represent various goods and services classified by industry or consumer categories and
+        /// major physical similarities. Taxability rules are associated with tax codes. Customers can map their Items to tax codes
+        /// allowing them to take advantage of thousands of tax rules in the AvaTax engine resulting in accurate taxability determinations.
+        ///  
+        /// Enable includeClassificationDetails flag to get details of classification request status.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that defined these items</param>
+        /// <param name="includeClassificationDetails">A boolean field to get detailed classification status.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* classificationDetails, totalItems</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ItemTaxCodeClassificationRequestStatusOutputModel>> GetClassificationStatusAsync(Int32 companyId, Boolean? includeClassificationDetails, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$includeClassificationDetails", includeClassificationDetails);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ItemTaxCodeClassificationRequestStatusOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -17969,7 +18496,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -17981,7 +18508,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17999,7 +18526,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -18011,7 +18538,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemClassificationOutputModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18031,7 +18558,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -18043,7 +18570,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemParameterModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18059,7 +18586,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -18067,7 +18594,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* tagName</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        public async Task<FetchResult<ItemTagDetailModel>> GetItemTagsAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
+        public async Task<FetchResult<ItemTagDetailOutputModel>> GetItemTagsAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
@@ -18075,8 +18602,120 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FetchResult<ItemTagDetailModel>>("GET", path, null).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ItemTagDetailOutputModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve premium classification for a company's item based on its ItemCode and SystemCode.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the premium classification for an ItemCode and SystemCode.
+        ///  
+        /// NOTE: If your item code contains any of these characters /, +, ?,",' ,% or #, please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: 'Item/Code' becomes 'Item_-ava2f-_Code'
+        /// * Replace '+' with '\_-ava2b-\_' For example: 'Item+Code' becomes 'Item_-ava2b-_Code'
+        /// * Replace '?' with '\_-ava3f-\_' For example: 'Item?Code' becomes 'Item_-ava3f-_Code'
+        /// * Replace '%' with '\_-ava25-\_' For example: 'Item%Code' becomes 'Item_-ava25-_Code'
+        /// * Replace '#' with '\_-ava23-\_' For example: 'Item#Code' becomes 'Item_-ava23-_Code'
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this item object</param>
+        /// <param name="itemCode">The ItemCode of the item for which you want to retrieve premium classification</param>
+        /// <param name="systemCode">The SystemCode for which you want to retrieve premium classification</param>
+        public async Task<ItemPremiumClassificationOutputModel> GetPremiumClassificationAsync(Int32 companyId, String itemCode, String systemCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemCode}/premiumClassification/{systemCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemCode", itemCode);
+            path.ApplyField("systemCode", systemCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemPremiumClassificationOutputModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Get tax code recommendations;
+        /// </summary>
+        /// <remarks>
+        /// Get tax code recommendations.
+        ///  
+        /// Avalara AvaTax system tax codes represent various goods and services classified by industry or consumer categories and
+        /// major physical similarities. Taxability rules are associated with tax codes. Customers can map their Items to tax codes
+        /// allowing them to take advantage of thousands of tax rules in the AvaTax engine resulting in accurate taxability determinations.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that defined these items</param>
+        /// <param name="requestId">The ID of the classification request</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* recommendations, url</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ItemTaxCodeRecommendationsOutputModel>> GetTaxCodeRecommendationsAsync(Int32 companyId, Int32 requestId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode/{requestId}/recommendations");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("requestId", requestId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ItemTaxCodeRecommendationsOutputModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve Restrictions for Item by CountryOfImport;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve Restrictions for Item by CountryOfImport. This API will only return import restriction for the countryOfImport.
+        ///  
+        /// NOTE: If your item code contains any of these characters /, +, ? or a space, please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: 'Item/Code' becomes 'Item_-ava2f-_Code'
+        /// * Replace '+' with '\_-ava2b-\_' For example: 'Item+Code' becomes 'Item_-ava2b-_Code'
+        /// * Replace '?' with '\_-ava3f-\_' For example: 'Item?Code' becomes 'Item_-ava3f-_Code'
+        /// * Replace '%' with '\_-ava25-\_' For example: 'Item%Code' becomes 'Item_-ava25-_Code'
+        /// * Replace '#' with '\_-ava23-\_' For example: 'Item#Code' becomes 'Item_-ava23-_Code'
+        /// * Replace ''' with '\_-ava27-\_' For example: 'Item'Code' becomes 'Item_-ava27-_Code'
+        /// * Replace '"' with '\_-ava22-\_' For example: 'Item"Code' becomes 'Item_-ava22-_Code'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this item object</param>
+        /// <param name="itemCode">ItemCode for the item</param>
+        /// <param name="countryOfImport">Country for which you want the restrictions for the Item.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ItemRestrictionOutputModel>> ListImportRestrictionsAsync(Int32 companyId, String itemCode, String countryOfImport, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemCode}/restrictions/import/{countryOfImport}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemCode", itemCode);
+            path.ApplyField("countryOfImport", countryOfImport);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ItemRestrictionOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -18096,7 +18735,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -18114,7 +18753,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ItemClassificationOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18137,7 +18776,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -18155,7 +18794,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ItemParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18178,20 +18817,21 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         ///  
         /// You may specify Tag Name in the `tagName` query parameter if you want to filter items on the basis of tagName
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Parameters
         /// * Classifications
         /// * Tags
+        /// * Properties
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, classifications, parameters, tags</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, upc, classifications, parameters, tags, properties</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -18207,7 +18847,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("tagName", tagName);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18231,10 +18871,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, classifications, parameters, tags</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, upc, classifications, parameters, tags, properties</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -18247,7 +18887,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18271,12 +18911,12 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, classifications, parameters, tags</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, upc, classifications, parameters, tags, properties</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -18291,8 +18931,37 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create or update items from a product catalog.;
+        /// </summary>
+        /// <remarks>
+        /// Creates/updates one or more item objects with additional properties and the AvaTax category attached to this company.
+        ///  
+        /// Items are a way of separating your tax calculation process from your tax configuration details. Use this endpoint to create
+        /// a new or update an existing item. This can be used to sync the items with Avalara. For example, an accounting software
+        /// system can use this to sync all their items from an ERP with Avalara.
+        ///  
+        /// Parameters and Classifications can be added with the Item.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this item.</param>
+        /// <param name="model">The items you want to create or update.</param>
+        public async Task<ItemCatalogueOutputModel> SyncItemCatalogueAsync(Int32 companyId, List<ItemCatalogueInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemCatalogueOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -18316,7 +18985,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
@@ -18325,7 +18994,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/sync");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<SyncItemsResponseModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18350,7 +19019,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
@@ -18361,7 +19030,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18381,7 +19050,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -18394,7 +19063,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemClassificationOutputModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18414,7 +19083,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -18427,7 +19096,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemParameterModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18446,7 +19115,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -18455,7 +19124,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<JurisdictionOverrideModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18469,7 +19138,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -18479,7 +19148,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18498,7 +19167,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -18508,7 +19177,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<JurisdictionOverrideModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18530,7 +19199,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns this override</param>
@@ -18548,7 +19217,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18570,7 +19239,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country, Jurisdictions</param>
@@ -18586,7 +19255,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18600,7 +19269,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that this jurisdictionoverride belongs to.</param>
@@ -18611,7 +19280,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<JurisdictionOverrideModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18635,7 +19304,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this location parameter.</param>
@@ -18646,7 +19315,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<LocationParameterModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18660,7 +19329,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this location.</param>
@@ -18669,7 +19338,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<LocationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18683,7 +19352,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this location.</param>
@@ -18693,7 +19362,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18713,7 +19382,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -18725,7 +19394,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18748,7 +19417,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this location</param>
@@ -18760,7 +19429,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<LocationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18780,7 +19449,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -18792,7 +19461,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<LocationParameterModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18815,7 +19484,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -18833,7 +19502,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<LocationParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18858,7 +19527,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these locations</param>
@@ -18876,7 +19545,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<LocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18902,7 +19571,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isMarketplaceOutsideUsa, settings, parameters</param>
@@ -18918,7 +19587,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<LocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18934,7 +19603,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that this location belongs to.</param>
@@ -18945,7 +19614,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<LocationModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18965,7 +19634,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -18978,7 +19647,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<LocationParameterModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18994,7 +19663,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this location</param>
@@ -19004,7 +19673,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/validate");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<LocationValidationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19035,7 +19704,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19049,7 +19718,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19084,7 +19753,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19095,7 +19764,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/audit");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AuditMultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19124,7 +19793,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19132,7 +19801,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<MultiDocumentModel> CommitMultiDocumentTransactionAsync(CommitMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/commit");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19185,7 +19854,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19195,7 +19864,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19228,7 +19897,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19241,7 +19910,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19283,7 +19952,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19294,7 +19963,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19334,7 +20003,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19351,7 +20020,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<MultiDocumentModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19408,7 +20077,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19422,7 +20091,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19449,7 +20118,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19457,7 +20126,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<MultiDocumentModel> VerifyMultiDocumentTransactionAsync(VerifyMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/verify");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19487,7 +20156,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -19499,7 +20168,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/void");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19531,7 +20200,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
@@ -19540,7 +20209,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<NexusModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19563,7 +20232,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this nexus parameter.</param>
@@ -19574,7 +20243,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<NexusParameterDetailModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19602,7 +20271,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that will own this nexus.</param>
@@ -19611,7 +20280,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byaddress");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<NexusByAddressModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19632,7 +20301,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
@@ -19644,7 +20313,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("cascadeDelete", cascadeDelete);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -19663,7 +20332,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -19675,7 +20344,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -19694,7 +20363,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
@@ -19704,7 +20373,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -19725,7 +20394,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
@@ -19737,7 +20406,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NexusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19762,7 +20431,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
@@ -19774,7 +20443,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NexusByTaxFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19793,7 +20462,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -19805,7 +20474,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NexusParameterDetailModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19829,7 +20498,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
@@ -19847,7 +20516,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19871,7 +20540,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
@@ -19891,7 +20560,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19913,7 +20582,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -19931,7 +20600,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusParameterDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19955,7 +20624,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxTypeGroup, taxAuthorityId, taxName, parameters, taxableNexus</param>
@@ -19971,7 +20640,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20003,7 +20672,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
@@ -20014,7 +20683,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NexusModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -20034,7 +20703,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -20047,7 +20716,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NexusParameterDetailModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -20061,7 +20730,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
@@ -20069,7 +20738,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NoticeResponsibilityModel> CreateNoticeResponsibilityTypeAsync(CreateNoticeResponsibilityTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NoticeResponsibilityModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20083,7 +20752,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
@@ -20091,7 +20760,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NoticeRootCauseModel> CreateNoticeRootCauseTypeAsync(CreateNoticeRootCauseTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NoticeRootCauseModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20105,7 +20774,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="responsibilityId">The unique ID of the responsibility type</param>
@@ -20113,7 +20782,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities/{responsibilityId}");
             path.ApplyField("responsibilityId", responsibilityId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20127,7 +20796,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="rootCauseId">The unique ID of the root cause type</param>
@@ -20135,7 +20804,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses/{rootCauseId}");
             path.ApplyField("rootCauseId", rootCauseId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20162,7 +20831,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The id of the notification you wish to mark as dismissed.</param>
@@ -20170,7 +20839,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}/dismiss");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NotificationModel>("PUT", path, null).ConfigureAwait(false);
         }
 
@@ -20191,7 +20860,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The id of the notification to retrieve.</param>
@@ -20199,7 +20868,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NotificationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20223,7 +20892,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -20237,7 +20906,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<NotificationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20264,7 +20933,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Provisioning:RequestNewAccount].;
         /// </remarks>
@@ -20273,7 +20942,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NewAccountModel> RequestNewAccountAsync(NewAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20288,7 +20957,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Provisioning:RequestNewAccount].;
         /// </remarks>
@@ -20300,7 +20969,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/entitlements/{offer}");
             path.ApplyField("id", id);
             path.ApplyField("offer", offer);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<OfferModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -20318,14 +20987,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="model">The account you wish to create.</param>
         public async Task<List<AccountModel>> CreateAccountAsync(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<AccountModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20351,7 +21020,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [NotificationsAPI:Create].;
         /// </remarks>
 		
@@ -20359,8 +21028,36 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<NotificationModel>> CreateNotificationsAsync(List<NotificationModel> model)
         {
             var path = new AvaTaxPath("/api/v2/notifications");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<NotificationModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create Avalara-supported subscription (ServiceTypes);
+        /// </summary>
+        /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Create one service/subscription object.
+        ///  
+        /// Returns the newly created Avalara-supported subscription (service) type.
+        /// This API is intended to be useful for adding new Avalara-supported subscription type (service type).
+        /// You may always contact Avalara's sales department for information on available products or services.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="model">The subscription type object you wish to create.</param>
+        public async Task<SubscriptionTypeModel> CreateServiceTypesAsync(SubscriptionTypeModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/servicetypes");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<SubscriptionTypeModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -20377,7 +21074,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
@@ -20386,7 +21083,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<SubscriptionModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20412,7 +21109,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20435,7 +21132,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [NotificationsAPI:Create].;
         /// </remarks>
 		
@@ -20444,7 +21141,33 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a single Subscription (ServiceTypes) object;
+        /// </summary>
+        /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Marks the Subscription (ServiceTypes) object identified by this URL as deleted.
+        /// This API is useful for deleting an existing Avalara-supported subscription type (service type).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="id">The unique ID number of the Subscription object you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteServiceTypeAsync(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20461,7 +21184,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
@@ -20471,28 +21194,42 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Retrieve List of Accounts by Account Migration Status;
+        /// Retrieve the full list of Avalara-supported subscription (ServiceTypes);
         /// </summary>
         /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Returns the full list of Avalara-supported subscription types.
+        /// This API is intended to be useful for identifying which features you have added to your account.
+        /// You may always contact Avalara's sales department for information on available products or services.
+        /// You cannot change your subscriptions/service directly through the API.
+        /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
-        /// <param name="writeMode"></param>
-        public async Task<AccountMigrationStatusModel> ListAccountsByTssWriteModeAsync(TssAccountMigrationId writeMode)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<SubscriptionTypeModel>> ListServiceTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/accounts/ListAccountsByTssWriteMode/{writeMode}");
-            path.ApplyField("writeMode", writeMode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<AccountMigrationStatusModel>("GET", path, null).ConfigureAwait(false);
+            var path = new AvaTaxPath("/api/v2/servicetypes/servicetypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -20510,19 +21247,19 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API is available to Avalara system-level (registrar-level) users only.;
         /// </remarks>
 		
         /// <param name="userId">The unique ID of the user whose password will be changed</param>
-        /// <param name="unmigrateFromAi">If user's password was migrated to AI, undo this.</param>
+        /// <param name="isUndoMigrateRequest">If user's password was migrated to AI, undo this.</param>
         /// <param name="model">The new password for this user</param>
-        public async Task<String> ResetPasswordAsync(Int32 userId, Boolean? unmigrateFromAi, SetPasswordModel model)
+        public async Task<String> ResetPasswordAsync(Int32 userId, Boolean? isUndoMigrateRequest, SetPasswordModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
-            path.AddQuery("unmigrateFromAi", unmigrateFromAi);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            path.AddQuery("isUndoMigrateRequest", isUndoMigrateRequest);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20539,7 +21276,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the account you wish to update.</param>
@@ -20548,7 +21285,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AccountModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -20571,7 +21308,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: BatchServiceAdmin, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [NotificationsAPI:Create].;
         /// </remarks>
 		
@@ -20581,8 +21318,36 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NotificationModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update existing Avalara-supported subscription (ServiceTypes);
+        /// </summary>
+        /// <remarks>
+        /// For Registrar Use Only
+        /// This API is for use by Avalara Registrar administrative users only.
+        ///  
+        /// Returns the updated Avalara-supported service types.
+        /// This API is intended to be useful for updating an existing subscription(service) type detail.
+        /// You may always contact Avalara's sales department for information on available products or services.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="id">The unique ID number of the existing subscription type object to replace.</param>
+        /// <param name="model">The subscription type object to update.</param>
+        public async Task<SubscriptionTypeModel> UpdateServiceTypeAsync(Int32 id, SubscriptionTypeModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<SubscriptionTypeModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -20602,7 +21367,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that this subscription belongs to.</param>
@@ -20613,7 +21378,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<SubscriptionModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -20640,7 +21405,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="id">The unique ID number of this report</param>
@@ -20648,7 +21413,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20676,7 +21441,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ReportModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20709,7 +21474,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company to report on.</param>
@@ -20718,7 +21483,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ReportModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20742,7 +21507,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The id of the company for which to get reports.</param>
@@ -20756,7 +21521,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("pageKey", pageKey);
             path.AddQuery("$skip", skip);
             path.AddQuery("$top", top);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ReportModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20784,7 +21549,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this setting.</param>
@@ -20793,7 +21558,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<SettingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20816,7 +21581,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this setting.</param>
@@ -20826,7 +21591,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20849,7 +21614,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this setting</param>
@@ -20859,7 +21624,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<SettingModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20885,7 +21650,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these settings</param>
@@ -20903,7 +21668,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SettingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20929,7 +21694,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* modifiedDate, ModifiedUserId</param>
@@ -20945,7 +21710,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SettingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20972,7 +21737,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that this setting belongs to.</param>
@@ -20983,7 +21748,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<SettingModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -20999,7 +21764,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns this subscription</param>
@@ -21009,7 +21774,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<SubscriptionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21028,7 +21793,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="accountId">The ID of the account that owns these subscriptions</param>
@@ -21044,7 +21809,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21063,7 +21828,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* subscriptionDescription</param>
@@ -21077,7 +21842,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21095,7 +21860,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
@@ -21104,7 +21869,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<TaxCodeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21118,7 +21883,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
@@ -21128,7 +21893,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -21146,7 +21911,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this tax code</param>
@@ -21156,7 +21921,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxCodeModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21177,7 +21942,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
@@ -21195,7 +21960,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21216,7 +21981,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -21232,7 +21997,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21252,7 +22017,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that this tax code belongs to.</param>
@@ -21263,7 +22028,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxCodeModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21299,7 +22064,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -21307,8 +22072,8 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FileResult> BuildTaxContentFileAsync(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FileResult>("POST", path, model).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallFileAsync("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -21343,7 +22108,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
 		
@@ -21362,8 +22127,8 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -21415,7 +22180,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default). Example input: 2016-12-31</param>
@@ -21425,8 +22190,8 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
             path.ApplyField("date", date.ToString("o"));
             path.AddQuery("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -21441,8 +22206,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -21489,7 +22256,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21507,8 +22274,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -21538,7 +22307,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxrates/bypostalcode");
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21564,7 +22333,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
@@ -21573,7 +22342,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<TaxRuleModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21599,7 +22368,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
@@ -21609,7 +22378,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -21635,7 +22404,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this tax rule</param>
@@ -21645,7 +22414,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxRuleModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21674,7 +22443,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these tax rules</param>
@@ -21692,7 +22461,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxRuleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21721,7 +22490,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, taxTypeCode, taxRuleProductDetail, rateTypeCode, taxTypeGroup, taxSubType, unitOfBasis</param>
@@ -21737,7 +22506,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxRuleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21763,7 +22532,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that this tax rule belongs to.</param>
@@ -21774,7 +22543,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxRuleModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21807,7 +22576,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -21817,7 +22586,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/add");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21859,7 +22628,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -21875,7 +22644,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21911,7 +22680,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -21922,7 +22691,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AuditTransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21958,7 +22727,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -21971,7 +22740,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AuditTransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21999,7 +22768,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<BulkLockTransactionResult> BulkLockTransactionAsync(BulkLockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/lock");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<BulkLockTransactionResult>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22041,7 +22810,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22057,7 +22826,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22098,7 +22867,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
@@ -22113,7 +22882,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22136,6 +22905,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
@@ -22159,7 +22930,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22169,7 +22940,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22194,6 +22965,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// The field `type` identifies the kind of transaction - for example, a sale, purchase, or refund. If you do not specify
         /// a `type` value, you will receive an estimate of type `SalesOrder`, which will not be recorded.
         ///  
@@ -22222,7 +22995,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22232,7 +23005,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22262,7 +23035,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22272,8 +23045,29 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/delete");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Fetches the Variance data generated for all the transactions done by Company.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
+        /// </remarks>
+		
+        /// <param name="companyCode"></param>
+        public async Task<VarianceResponseModel> GetAllVarianceReportByCompanyCodeAsync(String companyCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/AllVariance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<VarianceResponseModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -22311,7 +23105,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22326,7 +23120,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22348,7 +23142,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22363,7 +23157,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22375,8 +23169,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Get the unique transaction identified by this URL.
         ///  
-        /// This endpoint retrieves the exact transaction identified by this ID number even if that transaction was later adjusted
-        /// by using the `AdjustTransaction` endpoint.
+        /// This endpoint retrieves the exact transaction identified by this ID number, as long as it is the most version of the transaction.
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
@@ -22393,7 +23186,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22404,8 +23197,31 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Fetches the Variance data generated for particular Company by transaction ID;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
+        /// </remarks>
+		
+        /// <param name="companyCode"></param>
+        /// <param name="transactionId"></param>
+        public async Task<VarianceResponseModel> GetVarianceReportByCompanyCodeByTransactionIdAsync(String companyCode, String transactionId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionId}/variance");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionId", transactionId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<VarianceResponseModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -22446,7 +23262,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22467,7 +23283,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TransactionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22482,7 +23298,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is mainly used for connector developers to simulate what happens when the Returns product locks a document.
         /// After this API call succeeds, the document will be locked and can't be voided or adjusted.
         ///  
-        /// This API is only available to customers in Sandbox with AvaTaxPro subscription. On production servers, this API is available by invitation only.
+        /// On Sandbox, this API is only available to customers who have both an AvaTaxPro and a Managed Returns subscription. On Production, this API is only available internally for the Avalara Returns team.
         ///  
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
@@ -22509,7 +23325,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
@@ -22525,7 +23341,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22577,7 +23393,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22595,7 +23411,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
             path.AddQuery("useTaxDateOverride", useTaxDateOverride);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22636,7 +23452,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.;
         /// </remarks>
 		
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
@@ -22651,7 +23467,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22686,7 +23502,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22701,7 +23517,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -22733,7 +23549,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22748,8 +23564,30 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Generates the Variance report which will capture the difference between "Tax Calculated by Avalara" Vs "Actual Tax" paid at custom clearance at line / header level.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
+        /// </remarks>
+		
+        /// <param name="companyCode"></param>
+        /// <param name="model"></param>
+        public async Task<VarianceResponseModel> VarianceReportAsync(String companyCode, List<VarianceRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/variance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<VarianceResponseModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -22787,7 +23625,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22803,7 +23641,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22844,7 +23682,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -22860,7 +23698,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22875,7 +23713,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.;
         /// </remarks>
 		
@@ -22885,7 +23723,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<UPCModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22899,7 +23737,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.;
         /// </remarks>
 		
@@ -22910,7 +23748,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -22925,7 +23763,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.;
         /// </remarks>
 		
@@ -22936,7 +23774,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<UPCModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22954,7 +23792,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.;
         /// </remarks>
 		
@@ -22973,7 +23811,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<UPCModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22991,7 +23829,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.;
         /// </remarks>
 		
@@ -23008,7 +23846,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<UPCModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23025,7 +23863,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaUpc.;
         /// </remarks>
 		
@@ -23037,7 +23875,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<UPCModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -23051,7 +23889,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -23062,7 +23900,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -23074,7 +23912,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -23087,7 +23925,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.AddQuery("udfType", udfType);
             path.AddQuery("allowDefaults", allowDefaults);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<CompanyUserDefinedFieldModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23101,7 +23939,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
 		
@@ -23113,7 +23951,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields");
             path.ApplyField("companyId", companyId);
             path.AddQuery("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CompanyUserDefinedFieldModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23133,14 +23971,14 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="model">An object containing your current password and the new password.</param>
         public async Task<String> ChangePasswordAsync(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallStringAsync("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -23162,7 +24000,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="accountId">The unique ID number of the account where these users will be created.</param>
@@ -23171,7 +24009,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<UserModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23190,7 +24028,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user you wish to delete.</param>
@@ -23200,7 +24038,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -23219,7 +24057,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -23231,7 +24069,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<UserModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23259,7 +24097,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -23269,7 +24107,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}/entitlements");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<UserEntitlementModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23294,7 +24132,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="accountId">The accountID of the user you wish to list.</param>
@@ -23312,7 +24150,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<UserModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23339,7 +24177,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="include">Optional fetch commands.</param>
@@ -23355,7 +24193,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<UserModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23372,7 +24210,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user you wish to update.</param>
@@ -23383,7 +24221,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<UserModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -23408,7 +24246,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions/{serviceTypeId}");
             path.ApplyField("serviceTypeId", serviceTypeId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<SubscriptionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23431,7 +24269,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<SubscriptionModel>> ListMySubscriptionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23466,8 +24304,92 @@ namespace Avalara.AvaTax.RestClient
         public async Task<PingResultModel> PingAsync()
         {
             var path = new AvaTaxPath("/api/v2/utilities/ping");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"21.12.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<PingResultModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Fetches a previously stored age verification response.;
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*];
+        /// </remarks>
+		
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public async Task<AgeVerifyResult> findAgeVerificationAsync(AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/find");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<AgeVerifyResult>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Stores an age verification response for the account.;
+        /// </summary>
+        /// <remarks>
+        /// The request field must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, request field may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// 
+        /// 
+        /// The response field must meet the following criteria in order to be evaluated:
+        /// * *isOfAge*, *failureCodes* are required fields;
+        /// </remarks>
+		
+        /// <param name="model">Information about the individual whose age has been verified and the corresponding age verification response.</param>
+        public async Task storeAgeVerificationAsync(StoreAgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Conditionally performs an age verification check. If a record matching the request is found in the internal store, the associated response is returned. Otherwise, an age verification check is performed and the response is stored if the individual is determined to be of age.;
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*];
+        /// </remarks>
+		
+        /// <param name="simulatedFailureCode">(Optional) The failure code included in the simulated response of the endpoint. Note that this endpoint is only available in Sandbox for testing purposes.</param>
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public async Task<StoreIfVerifiedResult> storeIfVerifiedAsync(String simulatedFailureCode, AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/storeIfVerified");
+            path.AddQuery("simulatedFailureCode", simulatedFailureCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<StoreIfVerifiedResult>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -23497,7 +24419,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/ageverification/verify");
             path.AddQuery("simulatedFailureCode", simulatedFailureCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AgeVerifyResult>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23513,13 +24435,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public async Task deregisterShipmentAsync(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public async Task deregisterShipmentAsync(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/registration");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             await RestCallStringAsync("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -23535,13 +24465,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public async Task registerShipmentAsync(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public async Task registerShipmentAsync(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/registration");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             await RestCallStringAsync("PUT", path, null).ConfigureAwait(false);
         }
 
@@ -23557,13 +24495,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public async Task<ShippingVerifyResult> registerShipmentIfCompliantAsync(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public async Task<ShippingVerifyResult> registerShipmentIfCompliantAsync(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/registerIfCompliant");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ShippingVerifyResult>("PUT", path, null).ConfigureAwait(false);
         }
 
@@ -23579,13 +24525,13 @@ namespace Avalara.AvaTax.RestClient
         /// * A parameter with the name *RecipientName* must be specified and the value must be the name of the recipient.
         /// * Each alcohol line must include a *ContainerSize* parameter that describes the volume of a single container. Use the *unit* field to specify one of the following units: '*Litre*', '*Millilitre*', '*gallon (US fluid)*', '*quart (US fluid)*', '*ounce (fluid US customary)*'
         /// * Each alcohol line must include a *PackSize* parameter that describes the number of containers in a pack. Specify *Count* in the *unit* field.
+        /// * Each alcohol line must include a *AlcoholContent* parameter that describes the alcohol percentage by volume of the item. Specify *Percentage* in the *unit* field. If unable to provide this parameter, use version 2.1 of the API.
         /// 
         /// Optionally, the transaction and its lines may use the following parameters:
         /// * The *ShipDate* parameter may be used if the date of shipment is different than the date of the transaction. The value should be ISO-8601 compliant (e.g. 2020-07-21).
         /// * The *RecipientDOB* parameter may be used to evaluate age restrictions. The value should be ISO-8601 compliant (e.g. 2020-07-21).
         /// * The *PurchaserDOB* parameter may be used to evaluate age restrictions. The value should be ISO-8601 compliant (e.g. 2020-07-21).
         /// * The *SalesLocation* parameter may be used to describe whether the sale was made *OnSite* or *OffSite*. *OffSite* is the default value.
-        /// * The *AlcoholContent* parameter may be used to describe the alcohol percentage by volume of the item. Specify *Percentage* in the *unit* field.
         /// 
         /// **Security Policies**
         /// This API depends on all of the following active subscriptions: *AvaAlcohol, AutoAddress, AvaTaxPro*;
@@ -23594,13 +24540,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded the transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">(Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"</param>
-        public async Task<ShippingVerifyResult> verifyShipmentAsync(String companyCode, String transactionCode, String documentType)
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public async Task<ShippingVerifyResult> verifyShipmentAsync(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" )
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/shipment/verify");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ShippingVerifyResult>("GET", path, null).ConfigureAwait(false);
         }
 
